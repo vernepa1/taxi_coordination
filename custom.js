@@ -14,6 +14,9 @@ $(function () {
         }
         var map = new google.maps.Map(mapCanvas, mapOptions);
 
+        var trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(map);
+
         var markerImage = 'car_2.png';
 
         var marker = new google.maps.Marker({
