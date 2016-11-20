@@ -64,7 +64,22 @@ $(function () {
         });
         
     }
+	
+	function moveProgress() {
+		var elem = document.getElementById("myBar");
+		var width = 1;
+		var id = setInterval(frame, 60); // it will take 6 seconds to get to the end
+		function frame() {
+			if (width >= 100) {
+				clearInterval(id);
+			} else {
+				width++;
+				elem.style.width = width + '%';
+			}
+		}
+	}
 
 
     google.maps.event.addDomListener(window, 'load', initMap);
+	moveProgress();
 });
