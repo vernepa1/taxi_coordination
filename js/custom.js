@@ -1,3 +1,18 @@
+function OKButton() {
+    //if ($('#FormBox').val().length == 0) {
+    //    $("#FormBox").css('background-color',  'red');
+    //} else {
+    //    $("#FormBox").css('background-color',  'white');
+    //}    
+    $('#FromLabel').html ( $('#FormBox').val() );
+    $('#ToLabel').html ( $('#ToBox').val() );
+    $('#DateLabel').html ( $('#DateBox').val() + " " + $('#TimeBox').val());
+    $('#PassLabel').html ( $('#PassBox').val() );
+    $('#LuggLabel').html ( $('#LuggBox').val() );
+    $("#VIPLabel").prop("checked", document.getElementById('VIPBox').checked);
+}
+
+
 $(function () {
 
     var db = new Taxi.Persistence.Persistence();
