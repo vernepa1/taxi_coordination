@@ -1,0 +1,21 @@
+{
+  "taxis": [
+    {
+      "driver": {
+        "name": "Jan",
+        "surname": "Novak",
+        "phone": "+420590390490"
+      },
+      "vehicle": {
+        "seats": 4,
+        "luggage": 1,
+        "brand": "Audi",
+        "type": "A4",
+        "year": 2004
+      },
+      "shiftEnd": "20:00",
+      "lat": 50.0875726,
+      "long": 14.4189987
+    }
+  ]
+}

@@ -1,7 +1,11 @@
 $(function () {
 
     var db = new Taxi.Persistence.Persistence();
-    var i = 0;
+    $.getJSON("js/init.json")
+        .done(function (d) {
+            console.log(d);
+            db.initTaxisFromJson(d);
+        });
 
     function initMap() {
 
@@ -58,10 +62,10 @@ $(function () {
             infowindow.open(map, marker);
         });
         map.addListener('click', function (event) {
+            //todo akorat tohle je vlastne nesmysl, protoze taxi nemaji jit pridavat pres mapu, ty uz tam proste jsou z jineho systemu jakoby
             var latitude = event.latLng.lat();
             var longitude = event.latLng.lng();
             var pos = new google.maps.LatLng(latitude, longitude);
-            var taxi = new Taxi.Persistence.Taxi(i++, pos);
             db.addTaxi(taxi);
             var marker = new google.maps.Marker({
                 position: pos,

@@ -1,272 +1,411 @@
 <html>
-    <head>
-        <title>Taxi</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-        <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-        <link href='custom.css' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script>
-            Taxi = {};
-        </script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script src="js/persistence.js"></script>
-        <style>
-    /* Remove the navbar's default margin-bottom and rounded borders */
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-    }
-    
-    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 450px}
-    
-    /* Set gray background color and 100% height */
-    .sidenav {
-      padding-top: 20px;
-      background-color: #f1f1f1;
-      height: 100%;
-    }
-    
-    /* Set black background color, white text and some padding */
-    footer {
-      background-color: #555;
-      color: white;
-      padding: 15px;
-    }
-    
-    /* On small screens, set height to 'auto' for sidenav and grid */
-    @media screen and (max-width: 767px) {
-      .sidenav {
-        height: 100%;
-        padding: 15px;
-      }
-      .row.content {height:auto;}
-    }
-    table#orders
-    {
-        border-collapse:separate;
-        border-spacing:0 9px;
-    }
-    tr.border_bottom td {
-        border-bottom:1pt solid black;
-    }
-    .btn-circleOK {
-        width: 100px;
-        height: 100px;
-        text-align: center;
-        padding: 6px 0;
-        font-size: 12px;
-        line-height: 1.42;
-        border-radius: 50px;
-    }
-    .btn-circleFALSE {
-        width: 50px;
-        height: 50px;
-        text-align: center;
-        padding: 6px 0;
-        font-size: 12px;
-        line-height: 1.42;
-        border-radius: 25px;
-    }
-  </style>
-    </head>
-    <body>
-   
-  
+<head>
+    <title>Taxi</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='custom.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script>
+        Taxi = {};
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTcRkUPH3Sy6rx-LeFLAAeCF6MfkD88OA"></script>
+    <script src="js/persistence.js"></script>
+    <script src="js/custom.js"></script>
+    <style>
+        /* Remove the navbar's default margin-bottom and rounded borders */
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+        }
+
+        /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+        .row.content {
+            height: 450px
+        }
+
+        /* Set gray background color and 100% height */
+        .sidenav {
+            padding-top: 20px;
+            background-color: #f1f1f1;
+            height: 100%;
+        }
+
+        /* Set black background color, white text and some padding */
+        footer {
+            background-color: #555;
+            color: white;
+            padding: 15px;
+        }
+
+        /* On small screens, set height to 'auto' for sidenav and grid */
+        @media screen and (max-width: 767px) {
+            .sidenav {
+                height: 100%;
+                padding: 15px;
+            }
+
+            .row.content {
+                height: auto;
+            }
+        }
+
+        table#orders {
+            border-collapse: separate;
+            border-spacing: 0 9px;
+        }
+
+        tr.border_bottom td {
+            border-bottom: 1pt solid black;
+        }
+
+        .btn-circleOK {
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            padding: 6px 0;
+            font-size: 12px;
+            line-height: 1.42;
+            border-radius: 50px;
+        }
+
+        .btn-circleFALSE {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            padding: 6px 0;
+            font-size: 12px;
+            line-height: 1.42;
+            border-radius: 25px;
+        }
+    </style>
+</head>
+<body>
+
+
 <div class="container-fluid text-center">
-    <div class="row content"style="height: 130%">
-    <div class="col-lg-2 sidenav">
-        <table align="center" cellspacing="0" width="100%">
-        <tr><td align = 'center' colspan = 2><img src="person.png" alt="person" width='70%' height='70%'></td></tr>
-        <tr><td  align = 'center' colspan = 2><p><b><font size='6'>Driver name</font></b></p></td></tr>
-        <tr class="border_bottom"><td colspan=2><p></p></td></tr>
-        <tr><td><p></p></td></tr>
-        <tr><td colspan=2 align='center'><p><b><font size='5'>Personal info</font></b></p></tr></td>
-        <tr><td><p></p></td></tr>
-        <tr><td>Shift ends:</td><td>18:00</td><tr>
-        <tr><td>Phone:</td><td>+420 876 765 678</td><tr>
-        <tr><td><p></p></td></tr>
-        <tr><td>Note:</td>
-        <td>
-        <input class="form-control" id="ex1" type="text" width='10'>
-        </td></tr>
-        <tr class="border_bottom"><td colspan=2><p></p></td></tr>
-        <tr><td><p></p></td></tr>
-        <tr><td colspan=2 align='center'><p><b><font size='5'>Vehicle info</font></b></p></tr></td>
-        <tr><td>Number of passengers:</td><td>4</td><tr>
-        <tr><td>Number of luggage:</td><td>1</td><tr>
-        <tr><td>Brand:</td><td>Audi</td><tr>
-        <tr><td>Type</td><td>A4</td><tr>
-        <tr><td>Year:</td><td>2004</td><tr>
-        <tr><td><p></p></td></tr>
-        <tr class="border_bottom"><td colspan=2><p></p></td></tr>
-        <tr class="border_bottom"><td colspan=2><p></p></td></tr>
-        <tr><td><p></p></tr></td>
-        <tr><td align = 'center' colspan = 2><img src="customer.png" alt="customer" width='60%' height='60%'></td></tr>
-        <tr><td  align = 'center' colspan = 2><p><b><font size='6'>Customer name</font></b></p></td></tr>
-        <tr><td><p></p></td></tr>
-        <tr class="border_bottom"><td colspan=2><p></p></td></tr>
-        <tr><td><p></p></td></tr>
-        <tr><td colspan=2 align='center'><p><b><font size='5'>Personal info</font></b></p></tr></td>
-        <tr><td colspan=2><p></p></td></tr>
-        <tr><td>Phone:</td><td>+420 876 765 678</td><tr>
-        <tr><td colspan=2><p></p></td></tr>
-        <tr><td>Note:</td><td>
-        <input class="form-control" id="ex1" type="text" width='10'>
-        </td></tr>
-        <tr class="border_bottom"><td colspan=2><p></p></td></tr>
-        <tr><td colspan=2><p></p></td></tr>
-        <tr><td colspan=2><p></p></td></tr>
-        <tr><td colspan=2 align='center'><p><b><font size='5'>History</font></b></p></tr></td>
-        <tr><td colspan=2><p></p></td></tr>
-        <tr><td colspan=2>
-        <table border='1' width='100%'>
-        <tr><td align='center'><p><b>Date</b></p></td><td align='center'><p><b>Km</b></p></td><tr>
-        <tr><td align='center'><p>10/08/2016 9:16</p></td><td align='center'><p>45</p></td><tr>
-        <tr><td align='center'><p>11/08/2016 22:19</p></td><td align='center'><p>7</p></td><tr>
-        </table>
-        </td></tr>
-        </table>
-    </div>
-    <div class="col-lg-8 text-left">
-	<div class="row">
-		<div class="col-lg-2">
-			<div class="btn-group-vertical">
-				<button type="button" class="btn btn-primary">Cars and Customers</button>
-				<button type="button" class="btn btn-default">Cars</button>
-				<button type="button" class="btn btn-default">Customers</button>
-			</div>
-		</div>
-		<div class="col-lg-2">
-			<div class="btn-group-vertical">
-				<button type="button" class="btn btn-primary">All taxis</button>
-				<button type="button" class="btn btn-default">Basic taxis</button>
-				<button type="button" class="btn btn-default">Premium taxis</button>
-			</div>
-		</div>
-		<div class="col-lg-3">
-			<p></p>
-			<p>Passengers at least</p>
-			<div class="btn-group">
-				<button type="button" class="btn btn-primary">1</button>
-				<button type="button" class="btn btn-default">4</button>
-				<button type="button" class="btn btn-default">5</button>
-				<button type="button" class="btn btn-default">6</button>
-				<div class="btn-group">
-					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-					More <span class="caret"></span></button>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">7</a></li>
-						<li><a href="#">8</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div class="col-lg-3">
-			<p></p>
-			<p>Luggage at least</p>
-			<div class="btn-group">
-				<button type="button" class="btn btn-primary">1</button>
-				<button type="button" class="btn btn-default">4</button>
-				<button type="button" class="btn btn-default">5</button>
-				<button type="button" class="btn btn-default">6</button>
-				<div class="btn-group">
-					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-					More <span class="caret"></span></button>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">7</a></li>
-						<li><a href="#">8</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div class="col-lg-2">
-			<p></p>
-			<p></p>
-			<button type="button" class="btn btn-default btn-lg">Clear all filters</button>
-		</div>
-	</div>
-	<div class="row">
-		<div id="myProgress">
-			<div id="myBar"></div>
-		</div>
-	</div>
-	<div class="row">
-		<div id="map"></div>
-			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTcRkUPH3Sy6rx-LeFLAAeCF6MfkD88OA"></script>
-			<script src="js/custom.js"></script>
-	</div>
-    </div>
-     <div class="col-lg-2 sidenav">
-        <tr><td><p></p></tr></td>
-        <table align="center"  id="orders" cellspacing="0" width="100%">
-        <tr><td align = 'center'><img src="taxi_icon.png" class="taxi_icon" alt="Cinque Terre"></td></tr>
-        <tr><td  align = 'center'><p><b><font size='6'>New Order</font></b></p></td></tr>
-        <tr class="border_bottom"><td width="100%"></td></td>
-        <div class="form-group">
-        <tr><td><p></p></tr></td>
-        <tr><td>
-        <label for="inputdefault">From</label>
-        <input class="form-control" id="inputdefault" type="text">
-        </td></tr>
-        <tr><td>
-        <label for="inputdefault">To</label>
-        <input class="form-control" id="inputdefault" type="text">
-        </td></tr>
-        <tr><td>
-        <label for="inputdefault">Date</label>
-        <input class="form-control" id="inputdefault" type="text">
-        </td></tr>
-        <tr><td>
-        <label for="inputdefault">Time</label>
-        <input class="form-control" id="inputdefault" type="text">
-        </td></tr>
+    <div class="row content" style="height: 130%">
+        <div class="col-lg-2 sidenav">
+            <table align="center" cellspacing="0" width="100%">
+                <tr>
+                    <td align='center' colspan=2><img src="person.png" alt="person" width='70%' height='70%'></td>
+                </tr>
+                <tr>
+                    <td align='center' colspan=2><p><b><font size='6'>Driver name</font></b></p></td>
+                </tr>
+                <tr class="border_bottom">
+                    <td colspan=2><p></p></td>
+                </tr>
+                <tr>
+                    <td><p></p></td>
+                </tr>
+                <tr>
+                    <td colspan=2 align='center'><p><b><font size='5'>Personal info</font></b></p>
+                </tr>
+                </td>
+                <tr>
+                    <td><p></p></td>
+                </tr>
+                <tr>
+                    <td>Shift ends:</td>
+                    <td>18:00</td>
+                <tr>
+                <tr>
+                    <td>Phone:</td>
+                    <td>+420 876 765 678</td>
+                <tr>
+                <tr>
+                    <td><p></p></td>
+                </tr>
+                <tr>
+                    <td>Note:</td>
+                    <td>
+                        <input class="form-control" id="ex1" type="text" width='10'>
+                    </td>
+                </tr>
+                <tr class="border_bottom">
+                    <td colspan=2><p></p></td>
+                </tr>
+                <tr>
+                    <td><p></p></td>
+                </tr>
+                <tr>
+                    <td colspan=2 align='center'><p><b><font size='5'>Vehicle info</font></b></p>
+                </tr>
+                </td>
+                <tr>
+                    <td>Number of passengers:</td>
+                    <td>4</td>
+                <tr>
+                <tr>
+                    <td>Number of luggage:</td>
+                    <td>1</td>
+                <tr>
+                <tr>
+                    <td>Brand:</td>
+                    <td>Audi</td>
+                <tr>
+                <tr>
+                    <td>Type</td>
+                    <td>A4</td>
+                <tr>
+                <tr>
+                    <td>Year:</td>
+                    <td>2004</td>
+                <tr>
+                <tr>
+                    <td><p></p></td>
+                </tr>
+                <tr class="border_bottom">
+                    <td colspan=2><p></p></td>
+                </tr>
+                <tr class="border_bottom">
+                    <td colspan=2><p></p></td>
+                </tr>
+                <tr>
+                    <td><p></p>
+                </tr>
+                </td>
+                <tr>
+                    <td align='center' colspan=2><img src="customer.png" alt="customer" width='60%' height='60%'></td>
+                </tr>
+                <tr>
+                    <td align='center' colspan=2><p><b><font size='6'>Customer name</font></b></p></td>
+                </tr>
+                <tr>
+                    <td><p></p></td>
+                </tr>
+                <tr class="border_bottom">
+                    <td colspan=2><p></p></td>
+                </tr>
+                <tr>
+                    <td><p></p></td>
+                </tr>
+                <tr>
+                    <td colspan=2 align='center'><p><b><font size='5'>Personal info</font></b></p>
+                </tr>
+                </td>
+                <tr>
+                    <td colspan=2><p></p></td>
+                </tr>
+                <tr>
+                    <td>Phone:</td>
+                    <td>+420 876 765 678</td>
+                <tr>
+                <tr>
+                    <td colspan=2><p></p></td>
+                </tr>
+                <tr>
+                    <td>Note:</td>
+                    <td>
+                        <input class="form-control" id="ex2" type="text" width='10'>
+                    </td>
+                </tr>
+                <tr class="border_bottom">
+                    <td colspan=2><p></p></td>
+                </tr>
+                <tr>
+                    <td colspan=2><p></p></td>
+                </tr>
+                <tr>
+                    <td colspan=2><p></p></td>
+                </tr>
+                <tr>
+                    <td colspan=2 align='center'><p><b><font size='5'>History</font></b></p>
+                </tr>
+                </td>
+                <tr>
+                    <td colspan=2><p></p></td>
+                </tr>
+                <tr>
+                    <td colspan=2>
+                        <table border='1' width='100%'>
+                            <tr>
+                                <td align='center'><p><b>Date</b></p></td>
+                                <td align='center'><p><b>Km</b></p></td>
+                            <tr>
+                            <tr>
+                                <td align='center'><p>10/08/2016 9:16</p></td>
+                                <td align='center'><p>45</p></td>
+                            <tr>
+                            <tr>
+                                <td align='center'><p>11/08/2016 22:19</p></td>
+                                <td align='center'><p>7</p></td>
+                            <tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-lg-8 text-left">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="btn-group-vertical">
+                        <button type="button" class="btn btn-primary">Cars and Customers</button>
+                        <button type="button" class="btn btn-default">Cars</button>
+                        <button type="button" class="btn btn-default">Customers</button>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="btn-group-vertical">
+                        <button type="button" class="btn btn-primary">All taxis</button>
+                        <button type="button" class="btn btn-default">Basic taxis</button>
+                        <button type="button" class="btn btn-default">Premium taxis</button>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <p></p>
+                    <p>Passengers at least</p>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary">1</button>
+                        <button type="button" class="btn btn-default">4</button>
+                        <button type="button" class="btn btn-default">5</button>
+                        <button type="button" class="btn btn-default">6</button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                More <span class="caret"></span></button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">7</a></li>
+                                <li><a href="#">8</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <p></p>
+                    <p>Luggage at least</p>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary">1</button>
+                        <button type="button" class="btn btn-default">4</button>
+                        <button type="button" class="btn btn-default">5</button>
+                        <button type="button" class="btn btn-default">6</button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                More <span class="caret"></span></button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">7</a></li>
+                                <li><a href="#">8</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <p></p>
+                    <p></p>
+                    <button type="button" class="btn btn-default btn-lg">Clear all filters</button>
+                </div>
+            </div>
+            <div class="row">
+                <div id="myProgress">
+                    <div id="myBar"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="map"></div>
+            </div>
+        </div>
+        <div class="col-lg-2 sidenav">
+            <tr>
+                <td><p></p>
+            </tr>
+            </td>
+            <table align="center" id="orders" cellspacing="0" width="100%">
+                <tr>
+                    <td align='center'><img src="taxi_icon.png" class="taxi_icon" alt="Cinque Terre"></td>
+                </tr>
+                <tr>
+                    <td align='center'><p><b><font size='6'>New Order</font></b></p></td>
+                </tr>
+                <tr class="border_bottom">
+                    <td width="100%"></td>
+                    </td>
+                    <div class="form-group">
+                <tr>
+                    <td><p></p>
+                </tr>
+                </td>
+                <tr>
+                    <td>
+                        <label for="inputdefault">From</label>
+                        <input class="form-control" id="inputdefault" type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="inputdefault">To</label>
+                        <input class="form-control" id="inputdefault" type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="inputdefault">Date</label>
+                        <input class="form-control" id="inputdefault" type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="inputdefault">Time</label>
+                        <input class="form-control" id="inputdefault" type="text">
+                    </td>
+                </tr>
         </div>
         <div class="input-group spinner">
-        <tr><td>
-        <label for="inputdefault">Passengers</label>
-        </td></tr>
-        <tr><td>
-        <input type="text" class="form-control" value="1">
-        </td>
-        <td>
-        <div class="input-group-btn-vertical">
-        <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
-        <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
-        </td></tr>
-         <tr><td>
-        <label for="inputdefault">Luggage</label>
-        </td></tr>
-        <tr><td>
-        <input type="text" class="form-control" value="1">
-        </td>
-        <td>
-        <div class="input-group-btn-vertical">
-        <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
-        <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
-        </td></tr>
-        <tr><td>
-        <div class="checkbox">
-        <label><input type="checkbox" value="">VIP</label>
-        </div>
-        </td></tr>
-        <tr><td width='10%'>
-        <a href='#' class="btn btn-default btn-circleOK">
-            <img src="OK.png" width="100%" height="100%"/>
-        </a>
-         <a href='#' class="btn btn-default btn-circleFalse">
-            <img src="false.png" width="100%" height="100%"/>
-        </a>
-        </td></tr>
+            <tr>
+                <td>
+                    <label for="inputdefault">Passengers</label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" class="form-control" value="1">
+                </td>
+                <td>
+                    <div class="input-group-btn-vertical">
+                        <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+                        <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="inputdefault">Luggage</label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" class="form-control" value="1">
+                </td>
+                <td>
+                    <div class="input-group-btn-vertical">
+                        <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+                        <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="">VIP</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width='10%'>
+                    <a href='#' class="btn btn-default btn-circleOK">
+                        <img src="OK.png" width="100%" height="100%"/>
+                    </a>
+                    <a href='#' class="btn btn-default btn-circleFalse">
+                        <img src="false.png" width="100%" height="100%"/>
+                    </a>
+                </td>
+            </tr>
         </div>
         </table>
-       
+
 
     </div>
-  </div>
+</div>
 </div>
 </body>
 </html>
