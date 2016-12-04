@@ -14,8 +14,25 @@
         "year": 2004
       },
       "shiftEnd": "20:00",
-      "lat": 50.0875726,
+      "lat": 50.0885726,
       "long": 14.4189987
+    },
+    {
+      "driver": {
+        "name": "Petr",
+        "surname": "Gajdos",
+        "phone": "+420590654570"
+      },
+      "vehicle": {
+        "seats": 3,
+        "luggage": 2,
+        "brand": "Skoda",
+        "type": "Felicia",
+        "year": 1991
+      },
+      "shiftEnd": "18:00",
+      "lat": 50.0835726,
+      "long": 14.4169987
     }
   ]
 }
