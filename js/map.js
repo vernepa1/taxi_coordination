@@ -17,6 +17,8 @@
         };
         this.map = new google.maps.Map(mapCanvas, mapOptions);
 
+        this.markers = [];
+
         var markerImage = 'car_2.png';
 
         var trafficLayer = new google.maps.TrafficLayer();
@@ -46,8 +48,14 @@
             taxiId: id
         });
 
+        this.markers.push(marker);
+
+
         //todo a kdyz se na nej klikne, tak co?
         //zmenit ikonu a zobrzit info vlevo?
+        marker.addListener('click', function () {
+            alert("taxi "+marker.taxiId+ " clicked");
+        });
     };
 
     ns.Map.prototype.updateMap = function (db) {
