@@ -17,8 +17,12 @@ function SubmitOrderButton() {
     console.log("order submitted");
     var db = Taxi.Persistence.Persistence.getInstance();
     //todo
+    ResetOrderForm();
 }
 
+function ResetOrderForm() {
+    $("#orders :input").val("");
+}
 
 $(function () {
 
