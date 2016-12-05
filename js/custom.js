@@ -1,10 +1,10 @@
 function OKButton() {
-    //if ($('#FormBox').val().length == 0) {
-    //    $("#FormBox").css('background-color',  'red');
+    //if ($('#FromBox').val().length == 0) {
+    //    $("#FromBox").css('background-color',  'red');
     //} else {
-    //    $("#FormBox").css('background-color',  'white');
+    //    $("#FromBox").css('background-color',  'white');
     //}    
-    $('#FromLabel').html ( $('#FormBox').val() );
+    $('#FromLabel').html ( $('#FromBox').val() );
     $('#ToLabel').html ( $('#ToBox').val() );
     $('#DateLabel').html ( $('#DateBox').val() + " " + $('#TimeBox').val());
     $('#PassLabel').html ( $('#PassBox').val() );
