@@ -21,7 +21,13 @@ function SubmitOrderButton() {
 }
 
 function ResetOrderForm() {
+    var date = new Date();
     $("#orders :input").val("");
+    $('#DateBox').val(date.toDateString());
+    $('#TimeBox').val(date.toTimeString());
+    $('#PassBox').val(1);
+    $('#LuggBox').val(1);
+    document.getElementById('VIPBox').prop("checked", false);
 }
 
 $(function () {
@@ -52,10 +58,8 @@ $(function () {
         }
     }
 
-    var date = new Date();
-    $('#DateBox').val(date.toDateString());
-    $('#TimeBox').val(date.toTimeString());
 
+    ResetOrderForm();
     moveProgress();
     google.maps.event.addDomListener(window, 'load', map);
 });
