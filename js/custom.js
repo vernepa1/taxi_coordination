@@ -1,21 +1,28 @@
 function OKButton() {
-    //if ($('#FromBox').val().length == 0) {
-    //    $("#FromBox").css('background-color',  'red');
-    //} else {
-    //    $("#FromBox").css('background-color',  'white');
-    //}    
-    $('#FromLabel').html ( $('#FromBox').val() );
-    $('#ToLabel').html ( $('#ToBox').val() );
-    $('#DateLabel').html ( $('#DateBox').val() + " " + $('#TimeBox').val());
-    $('#PassLabel').html ( $('#PassBox').val() );
-    $('#LuggLabel').html ( $('#LuggBox').val() );
-    $("#VIPLabel").prop("checked", document.getElementById('VIPBox').checked);
+    if ($('#FromBox').val().length == 0) {
+        alert("Fill from box!");
+    } else if ($('#ToBox').val().length == 0) {
+        alert("Fill to box!");
+    } else {
+        $('#FromLabel').html ( $('#FromBox').val() );
+        $('#ToLabel').html ( $('#ToBox').val() );
+        $('#DateLabel').html ( $('#DateBox').val() + " " + $('#TimeBox').val());
+        $('#PassLabel').html ( $('#PassBox').val() );
+        $('#LuggLabel').html ( $('#LuggBox').val() );
+        $("#VIPLabel").prop("checked", document.getElementById('VIPBox').checked);
+    }
+}
+
+function SubmitOrderButton() {
+    console.log("order submitted");
+    var db = Taxi.Persistence.Persistence.getInstance();
+    //todo
 }
 
 
 $(function () {
 
-    var db = new Taxi.Persistence.Persistence();
+    var db = Taxi.Persistence.Persistence.getInstance();
     var map = new Taxi.Map.Map();
 
     $.getJSON("js/init.json?"+Date.now())
@@ -40,6 +47,10 @@ $(function () {
             }
         }
     }
+
+    var date = new Date();
+    $('#DateBox').val(date.toDateString());
+    $('#TimeBox').val(date.toTimeString());
 
     moveProgress();
     google.maps.event.addDomListener(window, 'load', map);

@@ -4,11 +4,19 @@
 (function (ns, $, undefined) {
     i = 0;
 
+    db = null;
     ns.Persistence = function () {
         this.taxis = [];
         this.customers = [];
     };
 
+    ns.Persistence.getInstance = function () {
+        if (db == null) {
+            db = new ns.Persistence();
+        }
+        return db;
+    };
+    
     ns.Persistence.generateId = function () {
         return i++;
     };

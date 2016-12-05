@@ -19,8 +19,6 @@
 
         this.markers = [];
 
-        var markerImage = 'car_2.png';
-
         var trafficLayer = new google.maps.TrafficLayer();
         trafficLayer.setMap(this.map);
 
