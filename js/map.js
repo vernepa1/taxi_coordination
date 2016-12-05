@@ -58,7 +58,15 @@
         });
     };
 
+    ns.Map.prototype.cleanMarkers = function () {
+        $.each(this.markers, function (i, m) {
+            m.setMap(null);
+        });
+        this.markers.length = 0;
+    };
+
     ns.Map.prototype.updateMap = function (db) {
+        this.cleanMarkers();
         var self = this;
         $.each(db.taxis, function (i, d) {
             self.addTaxi(d.id, d.loc);
