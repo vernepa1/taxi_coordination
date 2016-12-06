@@ -59,7 +59,7 @@
         //todo a kdyz se na nej klikne, tak co?
         //zmenit ikonu a zobrzit info vlevo?
         marker.addListener('click', function () {
-            alert("taxi " + marker.taxiId + " clicked");
+            Selection.selectTaxiId(marker.taxiId);
         });
     };
 

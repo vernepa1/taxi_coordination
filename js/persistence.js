@@ -39,6 +39,17 @@
         });
     };
 
+    ns.Persistence.prototype.getTaxi = function (id) {
+        return this.taxis.find(function(element) {
+            return element.id == id;
+        });
+    };
+
+    ns.Persistence.prototype.getCustomer = function (id) {
+        return this.customers.find(function(element) {
+            return element.id == id;
+        });
+    };
 
     //jak ridic tak zakaznik
     ns.Person = function (name, surname, phone) {
