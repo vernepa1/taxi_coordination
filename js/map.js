@@ -88,8 +88,6 @@
     };
 
     ns.Map.prototype.addTaxi = function (id, loc) {
-        if(!Filter.shouldShowTaxi(id)) return;
-
         var markerImage = 'car_2.png';
 
         var marker = new google.maps.Marker({
@@ -108,8 +106,6 @@
     };
 
     ns.Map.prototype.addCustomer = function (id, fromLoc, toLoc) {
-        if(!Filter.shouldShowCustomer(id)) return;
-
         var markerImage = 'icon-person.png';
         var toMarker = "to_small.png";
 
@@ -182,10 +178,12 @@
         var db = Taxi.Persistence.Persistence.getInstance();
         this.cleanMarkers();
         var self = this;
-        $.each(db.taxis, function (i, d) {
+        var filteredTaxis = Filter.filterTaxis(db.taxis);
+        var filteredCustomers = Filter.filterCustomers(db.customers);
+        $.each(filteredTaxis, function (i, d) {
             self.addTaxi(d.id, d.loc);
         });
-        $.each(db.customers, function (i, d) {
+        $.each(filteredCustomers, function (i, d) {
             self.addCustomer(d.id, d.fromLoc, d.toLoc);
         })
     };

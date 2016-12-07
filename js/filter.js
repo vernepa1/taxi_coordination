@@ -35,8 +35,7 @@ Filter.selectLuggage = function(luggage){
 
 Filter.clearAll();
 
-Filter.shouldShowTaxi = function(id) {
-    taxi = db.getTaxi(id);
+Filter.shouldShowTaxi = function(taxi) {
     if(Filter.type == Filter.Customers) return false;
     if(Filter.taxiType == Filter.PremiumTaxis) return false;
     if(Filter.passengers > taxi.vehicle.seats) return false;
@@ -44,6 +43,22 @@ Filter.shouldShowTaxi = function(id) {
     return true;
 }
 
-Filter.shouldShowCustomer = function(id) {
+Filter.shouldShowCustomer = function(customer) {
     return (Filter.type != Filter.Cars);
+}
+
+Filter.filterTaxis = function(taxis) {
+    filteredTaxis = [];
+    for(var i = 0; i < taxis.length; i++){
+        if(Filter.shouldShowTaxi(taxis[i])) filteredTaxis.push(taxis[i]);
+    }
+    return filteredTaxis;
+}
+
+Filter.filterCustomers = function(customers) {
+    filteredCustomers = [];
+    for(var i = 0; i < customers.length; i++){
+        if(Filter.shouldShowCustomer(customers[i])) filteredCustomers.push(customers[i]);
+    }
+    return filteredCustomers;
 }
