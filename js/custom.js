@@ -22,12 +22,7 @@ function OKButton() {
                     class: "btn "+ (i == 0 ? "btn-primary" : "btn-default"),
                     style: "width: 250px;",
                     id: t.id,
-                    click: function() {
-                        $("#availableDrivers").children().removeClass("btn-primary");
-                        $("#availableDrivers").children().addClass("btn-default");
-                        $(this).removeClass("btn-default");
-                        $(this).addClass("btn-primary");
-                    }
+                    click: buttonClassSwitcher
                 });
                 $("#availableDrivers").append(button);
             });
@@ -40,6 +35,13 @@ function OKButton() {
             $("#availableDrivers").append(button);
         }
     }
+}
+
+function buttonClassSwitcher() {
+    $(this).siblings().removeClass("btn-primary");
+    $(this).siblings().addClass("btn-default");
+    $(this).removeClass("btn-default");
+    $(this).addClass("btn-primary");
 }
 
 function SubmitOrderButton() {
