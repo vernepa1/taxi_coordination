@@ -72,14 +72,16 @@
     ns.Map.loadCustomerToLocation = function(customer, to) {
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode({
-            'address': from
+            'address': to
         }, function (results, status) {
+            console.log(status);
             if (status == google.maps.GeocoderStatus.OK) {
                 var db = Taxi.Persistence.Persistence.getInstance();
                 var c = db.getCustomer(customer);
                 if (results[0]) {
                     c.toLoc = results[0].geometry.location;
                 }
+                console.log(c);
                 ns.Map.getInstance().updateMap(db);
             }
         });
@@ -103,23 +105,61 @@
         });
     };
 
-    ns.Map.prototype.addCustomer = function (id, loc) {
+    ns.Map.prototype.addCustomer = function (id, fromLoc, toLoc) {
         var markerImage = 'icon-person.png';
+        var toMarker = "to_small.png";
 
-        var marker = new google.maps.Marker({
-            position: loc,
+        var fromMarker = new google.maps.Marker({
+            position: fromLoc,
             map: this.map,
             icon: markerImage,
             customerId: id
         });
+        var toMarker = new google.maps.Marker({
+            position: toLoc,
+            map: this.map,
+            icon: toMarker,
+            customerId: id
+        });
 
-        this.customerMarkers.push(marker);
+        var line = new google.maps.Polyline({
+            path: [
+                fromMarker.position,
+                toMarker.position
+            ],
+            strokeColor: "#FF0000",
+            strokeOpacity: 1.0,
+            strokeWeight: 10,
+            map: this.map
+        });
+
+        var c = Taxi.Persistence.Persistence.getInstance().getCustomer(id);
+        if (c.taxi != null) {
+            var driverLine = new google.maps.Polyline({
+                path: [
+                    fromMarker.position,
+                    c.taxi.loc
+                ],
+                strokeColor: "#00FF00",
+                strokeOpacity: 1.0,
+                strokeWeight: 10,
+                map: this.map
+            });
+
+            this.customerMarkers.push(driverLine);
+        }
+
+        this.customerMarkers.push(fromMarker);
+        this.customerMarkers.push(toMarker);
+        this.customerMarkers.push(line);
+
+
 
 
         //todo a kdyz se na nej klikne, tak co?
         //zmenit ikonu a zobrzit info vlevo?
-        marker.addListener('click', function () {
-            Selection.selectCustomerId(marker.customerId);
+        fromMarker.addListener('click', function () {
+            Selection.selectCustomerId(fromMarker.customerId);
         });
     };
 
@@ -141,7 +181,7 @@
             self.addTaxi(d.id, d.loc);
         });
         $.each(db.customers, function (i, d) {
-            self.addCustomer(d.id, d.fromLoc);
+            self.addCustomer(d.id, d.fromLoc, d.toLoc);
         })
     };
 

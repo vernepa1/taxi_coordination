@@ -50,6 +50,7 @@ function SubmitOrderButton() {
     var customer = new Taxi.Persistence.Customer(person, taxi, null, null);
     taxi.customer = customer;
     Taxi.Map.Map.loadCustomerFromLocation(customer.id, $('#FromBox').val());
+    Taxi.Map.Map.loadCustomerToLocation(customer.id, $('#ToBox').val());
     db.addCustomer(customer);
     ResetOrderForm();
 }
