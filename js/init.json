@@ -31,8 +31,42 @@
         "year": 1991
       },
       "shiftEnd": "18:00",
-      "lat": 50.0835726,
+      "lat": 50.0855726,
+      "long": 14.4189987
+    },
+    {
+      "driver": {
+        "name": "Michaela",
+        "surname": "Hrubá",
+        "phone": "+420123456789"
+      },
+      "vehicle": {
+        "seats": 7,
+        "luggage": 7,
+        "brand": "Toyota",
+        "type": "Sienna",
+        "year": 2009
+      },
+      "shiftEnd": "19:30",
+      "lat": 50.0927941,
       "long": 14.4169987
+    },
+    {
+      "driver": {
+        "name": "Jiří",
+        "surname": "Ovčáček",
+        "phone": "+420224373209"
+      },
+      "vehicle": {
+        "seats": 1,
+        "luggage": 1,
+        "brand": "GenX",
+        "type": "Nano",
+        "year": 2015
+      },
+      "shiftEnd": "13:00",
+      "lat": 50.0850558,
+      "long": 14.4258467
     }
   ]
 }
