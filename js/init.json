@@ -25,7 +25,7 @@
       },
       "vehicle": {
         "seats": 3,
-        "luggage": 2,
+        "luggage": 4,
         "brand": "Skoda",
         "type": "Felicia",
         "year": 1991
@@ -42,7 +42,7 @@
       },
       "vehicle": {
         "seats": 7,
-        "luggage": 7,
+        "luggage": 8,
         "brand": "Toyota",
         "type": "Sienna",
         "year": 2009

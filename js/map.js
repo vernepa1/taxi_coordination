@@ -64,7 +64,7 @@
                 if (results[0]) {
                     c.fromLoc = results[0].geometry.location;
                 }
-                ns.Map.getInstance().updateMap(db);
+                ns.Map.getInstance().updateMap();
             }
         });
     };
@@ -82,12 +82,14 @@
                     c.toLoc = results[0].geometry.location;
                 }
                 console.log(c);
-                ns.Map.getInstance().updateMap(db);
+                ns.Map.getInstance().updateMap();
             }
         });
     };
 
     ns.Map.prototype.addTaxi = function (id, loc) {
+        if(!Filter.shouldShowTaxi(id)) return;
+
         var markerImage = 'car_2.png';
 
         var marker = new google.maps.Marker({
@@ -106,6 +108,8 @@
     };
 
     ns.Map.prototype.addCustomer = function (id, fromLoc, toLoc) {
+        if(!Filter.shouldShowCustomer(id)) return;
+
         var markerImage = 'icon-person.png';
         var toMarker = "to_small.png";
 
@@ -174,7 +178,8 @@
         this.customerMarkers.length = 0;
     };
 
-    ns.Map.prototype.updateMap = function (db) {
+    ns.Map.prototype.updateMap = function () {
+        var db = Taxi.Persistence.Persistence.getInstance();
         this.cleanMarkers();
         var self = this;
         $.each(db.taxis, function (i, d) {

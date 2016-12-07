@@ -76,6 +76,19 @@ function buttonClassSwitcher() {
     $(this).addClass("btn-primary");
 }
 
+function clickedFilterButton() {
+    buttonClassSwitcher.call(this);
+    Taxi.Map.Map.getInstance().updateMap();
+}
+
+function clickedResetFilterButton() {
+    primaryButtons = document.getElementById("filters").getElementsByClassName("default");
+    for(var i = 0; i < primaryButtons.length; i++){
+        buttonClassSwitcher.call(primaryButtons[i]);
+    }
+    Taxi.Map.Map.getInstance().updateMap();
+}
+
 function SubmitOrderButton() {
     var db = Taxi.Persistence.Persistence.getInstance();
     //TODO co delat kdyz neni volny driver, tedy trida je btn-error
