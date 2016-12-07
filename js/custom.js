@@ -1,3 +1,25 @@
+function EditField(name) {
+    if (document.getElementById(name + 'Input').style.border=="1px solid black") {
+        $('#' + name + 'Input').prop("disabled", true);
+        changeIcon(document.getElementById(name),"edit.png");
+        document.getElementById(name + 'Input').style.border="0px solid black";
+        // To do
+        // Store();
+    } else {
+        $('#' + name + 'Input').prop("disabled", false);
+        changeIcon(document.getElementById(name), "save.png");
+        document.getElementById(name + 'Input').style.border="1px solid black";
+    }
+}
+
+
+function DiscardDriverButton() {
+    // To do
+    
+    
+}
+
+
 function OKButton() {
     if ($('#FromBox').val().length == 0) {
         alert("Fill from box!");
