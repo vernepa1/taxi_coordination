@@ -44,6 +44,7 @@ function OKButton() {
 
 function SubmitOrderButton() {
     var db = Taxi.Persistence.Persistence.getInstance();
+    //TODO co delat kdyz neni volny driver, tedy trida je btn-error
     var id = $("#availableDrivers").find("button.btn-primary").attr("id");
     var taxi = db.getTaxi(id);
     var person = new Taxi.Persistence.Person("Unknown", "Customer", "+420" + Math.floor((Math.random() * 999999999) + 100000000));
