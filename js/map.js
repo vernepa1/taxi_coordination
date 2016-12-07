@@ -3,6 +3,8 @@
  */
 (function (ns, $, undefined) {
 
+    map = null;
+
     ns.Map = function () {
         var mapCanvas = document.getElementById('map');
 
@@ -17,12 +19,20 @@
         };
         this.map = new google.maps.Map(mapCanvas, mapOptions);
 
-        this.markers = [];
+        this.taxiMarkers = [];
+        this.customerMarkers = [];
 
         var trafficLayer = new google.maps.TrafficLayer();
         trafficLayer.setMap(this.map);
 
         this.map.addListener('click', ns.Map.clickHandler);
+    };
+
+    ns.Map.getInstance = function () {
+        if (map == null) {
+            map = new ns.Map();
+        }
+        return map;
     };
 
     ns.Map.clickHandler = function (event) {
@@ -43,6 +53,38 @@
         });
     };
 
+    ns.Map.loadCustomerFromLocation = function(customer, from) {
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({
+            'address': from
+        }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                var db = Taxi.Persistence.Persistence.getInstance();
+                var c = db.getCustomer(customer);
+                if (results[0]) {
+                    c.fromLoc = results[0].geometry.location;
+                }
+                ns.Map.getInstance().updateMap(db);
+            }
+        });
+    };
+
+    ns.Map.loadCustomerToLocation = function(customer, to) {
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({
+            'address': from
+        }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                var db = Taxi.Persistence.Persistence.getInstance();
+                var c = db.getCustomer(customer);
+                if (results[0]) {
+                    c.toLoc = results[0].geometry.location;
+                }
+                ns.Map.getInstance().updateMap(db);
+            }
+        });
+    };
+
     ns.Map.prototype.addTaxi = function (id, loc) {
         var markerImage = 'car_2.png';
 
@@ -53,21 +95,43 @@
             taxiId: id
         });
 
-        this.markers.push(marker);
+        this.taxiMarkers.push(marker);
 
-
-        //todo a kdyz se na nej klikne, tak co?
-        //zmenit ikonu a zobrzit info vlevo?
+        //todo zmenit ikonu
         marker.addListener('click', function () {
             Selection.selectTaxiId(marker.taxiId);
         });
     };
 
+    ns.Map.prototype.addCustomer = function (id, loc) {
+        var markerImage = 'icon-person.png';
+
+        var marker = new google.maps.Marker({
+            position: loc,
+            map: this.map,
+            icon: markerImage,
+            customerId: id
+        });
+
+        this.customerMarkers.push(marker);
+
+
+        //todo a kdyz se na nej klikne, tak co?
+        //zmenit ikonu a zobrzit info vlevo?
+        marker.addListener('click', function () {
+            Selection.selectCustomerId(marker.customerId);
+        });
+    };
+
     ns.Map.prototype.cleanMarkers = function () {
-        $.each(this.markers, function (i, m) {
+        $.each(this.taxiMarkers, function (i, m) {
             m.setMap(null);
         });
-        this.markers.length = 0;
+        $.each(this.customerMarkers, function (i, m) {
+            m.setMap(null);
+        });
+        this.taxiMarkers.length = 0;
+        this.customerMarkers.length = 0;
     };
 
     ns.Map.prototype.updateMap = function (db) {
@@ -75,6 +139,9 @@
         var self = this;
         $.each(db.taxis, function (i, d) {
             self.addTaxi(d.id, d.loc);
+        });
+        $.each(db.customers, function (i, d) {
+            self.addCustomer(d.id, d.fromLoc);
         })
     };
 

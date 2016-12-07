@@ -45,18 +45,15 @@ Selection.selectCustomerId = function(id) {
 
 Selection.selectCustomer = function(customer) {
     Selection.selectedCustomer = customer;
-    alert("customer " + customer.id + 
-        " - " + customer.surname 
-        + " clicked");
     document.getElementById('panel-customer-name').innerHTML 
-        = customer.name + ' ' + customer.surname;
+        = customer.person.name + ' ' + customer.person.surname;
     document.getElementById('panel-customer-phone').innerHTML 
-        = customer.phone;
+        = customer.person.phone;
     document.getElementById('ex2').value 
-        = customer.note;        
+        = customer.person.note;
     document.getElementById('panel-customer-history'); //todo
 
     document.getElementById('ex2').oninput = function () {
-        customer.note = this.value;
+        customer.person.note = this.value;
     };
 };

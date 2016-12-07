@@ -39,6 +39,16 @@
         });
     };
 
+    ns.Persistence.prototype.getFreeTaxis = function() {
+        var free = [];
+        $.each(this.taxis, function (i, taxi) {
+            if (taxi.customer == null) {
+                free.push(taxi);
+            }
+        });
+        return free;
+    };
+
     ns.Persistence.prototype.getTaxi = function (id) {
         return this.taxis.find(function(element) {
             return element.id == id;
@@ -76,6 +86,16 @@
         this.shiftEnd = shiftEnd;
         this.loc = new google.maps.LatLng(lat, long);
         this.history = []; //todo kdy se naplnuje
+        this.customer = null;
+    };
+
+    ns.Customer = function (person, taxi, fromLoc, toLoc) {
+        this.id = ns.Persistence.generateId();
+        this.person = person;
+        this.taxi = taxi;
+        this.history = [];
+        this.fromLoc = fromLoc;
+        this.toLoc = toLoc;
     }
 
 
