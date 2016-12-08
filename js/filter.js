@@ -15,6 +15,7 @@ Filter.clearAll = function() {
     Filter.taxiType = Filter.AllTaxis;
     Filter.passengers = 1;
     Filter.luggage = 1;
+    Filter.text = '';
 }
 
 Filter.selectType = function(type){
@@ -33,6 +34,10 @@ Filter.selectLuggage = function(luggage){
     Filter.luggage = luggage;
 }
 
+Filter.selectText = function(text){
+    Filter.text = text;
+}
+
 Filter.clearAll();
 
 Filter.shouldShowTaxi = function(taxi) {
@@ -41,11 +46,24 @@ Filter.shouldShowTaxi = function(taxi) {
     if(Filter.taxiType === Filter.BasicTaxis && taxi.vehicle.premium) return false;
     if(Filter.passengers > taxi.vehicle.seats) return false;
     if(Filter.luggage > taxi.vehicle.luggage) return false;
-    return true;
+    return (
+        taxi.driver.name.includes(Filter.text) || 
+        taxi.driver.surname.includes(Filter.text) ||
+        taxi.driver.phone.includes(Filter.text) ||
+        taxi.vehicle.brand.includes(Filter.text) ||
+        taxi.vehicle.type.includes(Filter.text) ||
+        taxi.driver.note.includes(Filter.text)
+        )
 }
 
 Filter.shouldShowCustomer = function(customer) {
-    return (Filter.type !== Filter.Cars);
+    if(Filter.type === Filter.Cars) return false;
+    return (
+        customer.name.includes(Filter.text) || 
+        customer.surname.includes(Filter.text) ||
+        customer.phone.includes(Filter.text) ||
+        customer.note.includes(Filter.text)
+        )
 }
 
 Filter.filterTaxis = function(taxis) {

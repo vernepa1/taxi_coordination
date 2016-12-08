@@ -36,7 +36,7 @@
     };
 
     ns.Map.clickHandler = function (event) {
-        hidePanels();
+        Selection.unselectAll();
 
         var latitude = event.latLng.lat();
         var longitude = event.latLng.lng();
@@ -90,12 +90,14 @@
     };
 
     ns.Map.prototype.addTaxi = function (id, loc) {
-        var markerImage = 'car.png';
+        var icon = 'car.png';
+        if(Selection.isSelectedTaxiId(id))
+            icon = 'car_selected.png';
 
         var marker = new google.maps.Marker({
             position: loc,
             map: this.map,
-            icon: markerImage,
+            icon: icon,
             taxiId: id
         });
 
@@ -103,18 +105,21 @@
 
         //todo zmenit ikonu
         marker.addListener('click', function () {
-            Selection.selectTaxiId(marker.taxiId);
+            Selection.selectTaxiMarker(marker);
         });
     };
 
     ns.Map.prototype.addCustomer = function (id, fromLoc, toLoc) {
-        var markerImage = 'icon-person.png';
+        var icon = 'icon-person.png';
+        if(Selection.isSelectedCustomerId(id))
+            icon = 'icon-person_selected.png';
+
         var toMarker = "to_small.png";
 
         var fromMarker = new google.maps.Marker({
             position: fromLoc,
             map: this.map,
-            icon: markerImage,
+            icon: icon,
             customerId: id
         });
         var toMarker = new google.maps.Marker({
@@ -182,6 +187,8 @@
         var self = this;
         var filteredTaxis = Filter.filterTaxis(db.taxis);
         var filteredCustomers = Filter.filterCustomers(db.customers);
+        Selection.unselectTaxiIfNotIn(filteredTaxis);
+        Selection.unselectCustomerIfNotIn(filteredCustomers);
         $.each(filteredTaxis, function (i, d) {
             self.addTaxi(d.id, d.loc);
         });

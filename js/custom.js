@@ -70,12 +70,16 @@ function clickedFilterButton() {
     buttonClassSwitcher.call(this);
     Taxi.Map.Map.getInstance().updateMap();
 }
+function writtenFilterText() {
+    Taxi.Map.Map.getInstance().updateMap();
+}
 
 function clickedResetFilterButton() {
     primaryButtons = document.getElementById("filters").getElementsByClassName("default");
     for(var i = 0; i < primaryButtons.length; i++){
         buttonClassSwitcher.call(primaryButtons[i]);
     }
+    document.getElementById("textFilter").value = '';
     Taxi.Map.Map.getInstance().updateMap();
 }
 
@@ -103,11 +107,16 @@ function ResetOrderForm() {
     $('#VIPBox').prop("checked", false);
 }
 
-function hidePanels() {
-    $('#driverPanel').hide();
+function hideCustomerPanel() {
     $('#customerPanel').hide();
-    Selection.selectedTaxi = null;
-    Selection.selectedCustomer = null;
+}
+
+function hideDriverPanel() {
+    $('#driverPanel').hide();
+}
+
+function hideTaxiPanel() {
+    hideDriverPanel();
 }
 
 $(function () {
@@ -138,7 +147,7 @@ $(function () {
     }
 
 
-    hidePanels();
+    Selection.unselectAll();
     ResetOrderForm();
     moveProgress();
     google.maps.event.addDomListener(window, 'load', map);

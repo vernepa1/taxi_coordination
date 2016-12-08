@@ -4,13 +4,11 @@ Selection.selectedTaxi = null;
 Selection.selectedCustomer = null;
 Selection.db = Taxi.Persistence.Persistence.getInstance();
 
-Selection.selectTaxiId = function(id) {
-    Selection.selectTaxi(db.getTaxi(id));
-};
-
 Selection.selectTaxi = function(taxi) {
-    $('#driverPanel').show();
     Selection.selectedTaxi = taxi;
+    Taxi.Map.Map.getInstance().updateMap();
+    if(!taxi) return;
+    $('#driverPanel').show();
     if (taxi.customer != null) {
         this.selectCustomer(taxi.customer);
     }
@@ -44,10 +42,35 @@ Selection.selectTaxi = function(taxi) {
     document.getElementById('ex1').oninput = function () {
         driver.note = this.value;
     };
+
 };
 
+Selection.selectTaxiId = function(id) {
+    Selection.selectTaxi(db.getTaxi(id));
+};
+
+Selection.selectTaxiMarker = function(marker) {
+    Selection.selectTaxiId(marker.taxiId);
+}
+
+Selection.unselectTaxiIfNotIn = function(taxis) {
+    if(!taxis.includes(Selection.selectedTaxi)) {
+        Selection.selectedTaxi = null;
+        hideTaxiPanel();
+    }
+}
+
+Selection.isSelectedTaxiId = function(taxiId) {
+    return (Selection.selectedTaxi && Selection.selectedTaxi.id == taxiId);
+}
+
+Selection.isTaxiSelected = function() {
+    return !(!Selection.selectedTaxi);
+}
+
+
 Selection.openDriverDetails = function (id) {
-    var taxi = Taxi.Persistence.Persistence.getInstance().getTaxi(id);
+    var taxi = db.getTaxi(id);
     console.log(taxi);
     $('#EditShiftInput').val(taxi.shiftEnd);
     $('#EditPhoneInput').val(taxi.driver.phone);
@@ -79,7 +102,7 @@ Selection.editField = function (name) {
         $('#' + name + 'Input').prop("disabled", true);
         changeIcon(document.getElementById(name),"edit.png");
         document.getElementById(name + 'Input').style.border="0px solid black";
-        var taxi = Taxi.Persistence.Persistence.getInstance().getTaxi($('#driverId').text());
+        var taxi = db.getTaxi($('#driverId').text());
         this.saveTaxiByFields(taxi);
         this.selectTaxi(taxi);
     } else {
@@ -100,14 +123,11 @@ Selection.saveTaxiByFields = function(taxi) {
     taxi.vehicle.type = $('#EditTypeInput').val();
     taxi.vehicle.year = $('#EditYearInput').val();
 };
-
-Selection.selectCustomerId = function(id) {
-    Selection.selectCustomer(db.getCustomer(id));
-};
-
 Selection.selectCustomer = function(customer) {
-    $('#customerPanel').show();
     Selection.selectedCustomer = customer;
+    Taxi.Map.Map.getInstance().updateMap();
+    if(!customer) return;
+    $('#customerPanel').show();
 
     console.log(customer.taxi);
     if (customer.taxi != null && Selection.selectedTaxi != customer.taxi) {
@@ -125,3 +145,30 @@ Selection.selectCustomer = function(customer) {
         customer.person.note = this.value;
     };
 };
+
+Selection.selectCustomerId = function(id) {
+    Selection.selectCustomer(db.getCustomer(id));
+};
+
+Selection.unselectCustomerIfNotIn = function(customers) {
+    if(!customers.includes(Selection.selectedCustomer)) {
+        Selection.selectedCustomer = null;
+        hideCustomerPanel();
+    }
+}
+
+Selection.isSelectedCustomerId = function(customerId) {
+    return (Selection.selectedCostumer && Selection.selectedCostumer.id == customerId);
+}
+
+Selection.isCustomerSelected = function() {
+    return !(!Selection.selectedCostumer);
+}
+
+Selection.unselectAll = function() {
+    Selection.selectedCustomer = null;
+    Selection.selectedTaxi = null;
+    hideCustomerPanel();
+    hideTaxiPanel();    
+    Taxi.Map.Map.getInstance().updateMap();
+}
