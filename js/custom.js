@@ -1,16 +1,4 @@
-function EditField(name) {
-    if (document.getElementById(name + 'Input').style.border=="1px solid black") {
-        $('#' + name + 'Input').prop("disabled", true);
-        changeIcon(document.getElementById(name),"edit.png");
-        document.getElementById(name + 'Input').style.border="0px solid black";
-        // To do
-        // Store();
-    } else {
-        $('#' + name + 'Input').prop("disabled", false);
-        changeIcon(document.getElementById(name), "save.png");
-        document.getElementById(name + 'Input').style.border="1px solid black";
-    }
-}
+
 
 
 function DiscardDriverButton() {
@@ -69,6 +57,7 @@ function OKButton() {
     }
 }
 
+
 function buttonClassSwitcher() {
     $(this).siblings().removeClass("btn-primary");
     $(this).siblings().addClass("btn-default");
@@ -95,7 +84,7 @@ function SubmitOrderButton() {
     var id = $("#availableDrivers").find("button.btn-primary").attr("id");
     var taxi = db.getTaxi(id);
     var person = new Taxi.Persistence.Person("Unknown", "Customer", "+420" + Math.floor((Math.random() * 999999999) + 100000000));
-    var customer = new Taxi.Persistence.Customer(person, taxi, null, null);
+    var customer = new Taxi.Persistence.Customer(person, taxi, null, null, $('#FromBox').val(), $('#ToBox').val(), $('#estPrice').text());
     taxi.customer = customer;
     Taxi.Map.Map.loadCustomerFromLocation(customer.id, $('#FromBox').val());
     Taxi.Map.Map.loadCustomerToLocation(customer.id, $('#ToBox').val());
