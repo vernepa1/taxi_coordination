@@ -9,7 +9,11 @@ Selection.selectTaxiId = function(id) {
 };
 
 Selection.selectTaxi = function(taxi) {
+    $('#driverPanel').show();
     Selection.selectedTaxi = taxi;
+    if (taxi.customer != null) {
+        this.selectCustomer(taxi.customer);
+    }
     var driver = taxi.driver;
     var vehicle = taxi.vehicle;
     //alert("taxi " + taxi.id + 
@@ -102,7 +106,13 @@ Selection.selectCustomerId = function(id) {
 };
 
 Selection.selectCustomer = function(customer) {
+    $('#customerPanel').show();
     Selection.selectedCustomer = customer;
+
+    console.log(customer.taxi);
+    if (customer.taxi != null && Selection.selectedTaxi != customer.taxi) {
+        Selection.selectTaxi(customer.taxi);
+    }
     document.getElementById('panel-customer-name').innerHTML 
         = customer.person.name + ' ' + customer.person.surname;
     document.getElementById('panel-customer-phone').innerHTML 

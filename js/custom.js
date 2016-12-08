@@ -103,6 +103,13 @@ function ResetOrderForm() {
     $('#VIPBox').prop("checked", false);
 }
 
+function hidePanels() {
+    $('#driverPanel').hide();
+    $('#customerPanel').hide();
+    Selection.selectedTaxi = null;
+    Selection.selectedCustomer = null;
+}
+
 $(function () {
 
     var db = Taxi.Persistence.Persistence.getInstance();
@@ -131,6 +138,7 @@ $(function () {
     }
 
 
+    hidePanels();
     ResetOrderForm();
     moveProgress();
     google.maps.event.addDomListener(window, 'load', map);
