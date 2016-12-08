@@ -54,6 +54,7 @@ function OKButton() {
             });
             $("#availableDrivers").append(button);
         }
+        $('#Confirm').modal();
     }
 }
 
