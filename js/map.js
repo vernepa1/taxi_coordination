@@ -88,7 +88,7 @@
     };
 
     ns.Map.prototype.addTaxi = function (id, loc) {
-        var markerImage = 'car_2.png';
+        var markerImage = 'car.png';
 
         var marker = new google.maps.Marker({
             position: loc,

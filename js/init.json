@@ -11,7 +11,8 @@
         "luggage": 1,
         "brand": "Audi",
         "type": "A4",
-        "year": 2004
+        "year": 2004,
+        "premium": true
       },
       "shiftEnd": "20:00",
       "lat": 50.0885726,
@@ -28,7 +29,8 @@
         "luggage": 4,
         "brand": "Skoda",
         "type": "Felicia",
-        "year": 1991
+        "year": 1991,
+        "premium": false
       },
       "shiftEnd": "18:00",
       "lat": 50.0855726,
@@ -45,7 +47,8 @@
         "luggage": 8,
         "brand": "Toyota",
         "type": "Sienna",
-        "year": 2009
+        "year": 2009,
+        "premium": false
       },
       "shiftEnd": "19:30",
       "lat": 50.0927941,
@@ -62,7 +65,8 @@
         "luggage": 1,
         "brand": "GenX",
         "type": "Nano",
-        "year": 2015
+        "year": 2015,
+        "premium": false
       },
       "shiftEnd": "13:00",
       "lat": 50.0850558,

@@ -1,12 +1,12 @@
 var Filter = {};
 
-Filter.CarsAndCustomers = 0;
-Filter.Cars = 1;
-Filter.Customers = 2;
+Filter.CarsAndCustomers = "CarsAndCustomers";
+Filter.Cars = "Cars";
+Filter.Customers = "Customers";
 
-Filter.AllTaxis = 0;
-Filter.BasicTaxis = 1;
-Filter.PremiumTaxis = 2;
+Filter.AllTaxis = "AllTaxis";
+Filter.BasicTaxis = "BasicTaxis";
+Filter.PremiumTaxis = "PremiumTaxis";
 
 Filter.db = Taxi.Persistence.Persistence.getInstance();
 
@@ -36,15 +36,16 @@ Filter.selectLuggage = function(luggage){
 Filter.clearAll();
 
 Filter.shouldShowTaxi = function(taxi) {
-    if(Filter.type == Filter.Customers) return false;
-    if(Filter.taxiType == Filter.PremiumTaxis) return false;
+    if(Filter.type === Filter.Customers) return false;
+    if(Filter.taxiType === Filter.PremiumTaxis && !taxi.vehicle.premium) return false;
+    if(Filter.taxiType === Filter.BasicTaxis && taxi.vehicle.premium) return false;
     if(Filter.passengers > taxi.vehicle.seats) return false;
     if(Filter.luggage > taxi.vehicle.luggage) return false;
     return true;
 }
 
 Filter.shouldShowCustomer = function(customer) {
-    return (Filter.type != Filter.Cars);
+    return (Filter.type !== Filter.Cars);
 }
 
 Filter.filterTaxis = function(taxis) {
