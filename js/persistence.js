@@ -70,15 +70,11 @@
         this.note = "";
     };
 
-<<<<<<< HEAD
-    ns.Vehicle = function (seats, luggage, brand, type, year, premium) {
-=======
     ns.Person.prototype.getFullName = function () {
         return this.name + " " + this.surname;
     };
 
-    ns.Vehicle = function (seats, luggage, brand, type, year) {
->>>>>>> 5928d4dfe06325873a8fc66a9bc504557a6a25cf
+    ns.Vehicle = function (seats, luggage, brand, type, year, premium) {
         this.id =  ns.Persistence.generateId();
         this.seats = seats;
         this.luggage = luggage;
