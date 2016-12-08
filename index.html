@@ -63,17 +63,19 @@
         tr.border_bottom td {
             border-bottom: 1pt solid black;
         }
-        tr.spaceUnder > td
-        {
+
+        tr.spaceUnder > td {
             padding-bottom: 10pt;
         }
+
         input {
             border: none;
             background: transparent;
-            width:100%;
-            box-sizing:border-box;
-            -moz-box-sizing:border-box;
+            width: 100%;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
         }
+
         .btn-circleOK {
             width: 100px;
             height: 100px;
@@ -97,77 +99,175 @@
 </head>
 <body>
 
-
-<div class="container-fluid text-center">
-    <div class="row content" style="height: 130%">
-        <div class="col-xs-2 sidenav">
-            <table id='side-panel' align="center" cellspacing="0" width="100%">
-                <tr>
-                    <td id='panel-driver-picture' align='center' colspan=2><button type="button" data-toggle="modal"  data-target="#DriverDetail" id="btnDriverDetails"><img src="person.png" alt="person" width='70%' height='70%'></button>
-                <div id="DriverDetail" class="modal fade" role="dialog">
-                    <div class="modal-dialog modal-lg" >
-                    <div class="modal-content">
-                    <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"><b><center>Driver details</center></b></h4>
-                    </div>
-                    <div class="modal-body">
-                    <table width="100%">
-                        <tr class="spaceUnder">
-                            <td width="25%"><img src="person.png" alt="person" width='70%' height='70%'></td>
-                            <td width="75%">
-                                <table width="100%">
-                                    <tr><td width="45%" colspan=3><b>Personal info</b></td><td width="5%"></td><td width="45%" colspan=3><b>Vehicle info</b></td></tr>
-                                    <tr><td colspan=7><br></td></tr>
-                                    <tr><td style="white-space:nowrap;">Shift ends:&nbsp;</td><td><input id="EditShiftInput" type="text" value="Text" disabled></td><td><button style="background-color: transparent;" type="button" onclick="EditField('EditShift')"><img id="EditShift" src="edit.png" alt="person" width='10' height='16'></button></td><td width="10%"></td>
-                                        <td>Passengers:&nbsp;</td><td><input id="EditPassengersInput" type="text" value="Text" disabled></td><td><button style="background-color: transparent;" type="button" onclick="EditField('EditPassengers')"><img id="EditPassengers" src="edit.png" alt="person" width='10' height='16'></button></td></tr> 
-                                    <tr><td style="white-space:nowrap;">Phone:&nbsp;</td><td><input id="EditPhoneInput" type="text" value="Text" disabled></td><td><button style="background-color: transparent;" type="button" onclick="EditField('EditPhone')"><img id="EditPhone" src="edit.png" alt="person" width='10' height='16'></button></td><td width="10%"></td>
-                                        <td>Luggage:&nbsp;</td><td><input id="EditLuggageInput" type="text" value="Text" disabled></td><td><button style="background-color: transparent;" type="button" onclick="EditField('EditLuggage')"><img id="EditLuggage" src="edit.png" alt="person" width='10' height='16'></button></td></tr> 
-                                    <tr><td style="white-space:nowrap;">Note:&nbsp;</td><td><input id="EditNoteInput" type="text" value="Text" disabled></td><td><button style="background-color: transparent;" type="button" onclick="EditField('EditNote')"><img id="EditNote" src="edit.png" alt="person" width='10' height='16'></button></td><td width="10%"></td>
-                                        <td>Brand:&nbsp;</td><td><input id="EditBrandInput" type="text" value="Text" disabled></td><td><button style="background-color: transparent;" type="button" onclick="EditField('EditBrand')"><img id="EditBrand" src="edit.png" alt="person" width='10' height='16'></button></td></tr> 
-                                    <tr><td colspan=3></td><td width="10%"></td>
-                                        <td>Type:&nbsp;</td><td><input id="EditTypeInput" type="text" value="Text" disabled></td><td><button style="background-color: transparent;" type="button" onclick="EditField('EditType')"><img id="EditType" src="edit.png" alt="person" width='10' height='16'></button></td></tr> 
-                                    <tr><td colspan=3></td><td width="10%"></td>
-                                        <td>Year:&nbsp;</td><td><input id="EditYearInput" type="text" value="Text" disabled></td><td><button style="background-color: transparent;" type="button" onclick="EditField('EditYear')"><img id="EditYear" src="edit.png" alt="person" width='10' height='16'></button></td></tr> 
-                                </table> 
-                            </td>
-                        </tr>
-                    </table>
-                    <br><br>
-                    <p style="padding-left: 1cm;" align="left"><b>Current client</b></p>
-                    <hr>
-                    <table width="100%">
-                    <tr align="left">
-                        <td style="white-space:nowrap;" width="25%"><img src="user-icon.jpg" width='20' height='20'>&nbsp;Customer name</td>
-                        <td style="white-space:nowrap;" width="25%">From</td>
-                        <td style="white-space:nowrap;" width="25%">To</td>
-                        <td style="white-space:nowrap;" width="25%">Cena CZK</td>
+<div id="DriverDetail" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><b>
+                    <center>Driver details</center>
+                </b></h4>
+            </div>
+            <div class="modal-body">
+                <table width="100%">
+                    <tr class="spaceUnder">
+                        <td width="25%"><img src="person.png" alt="person" width='70%' height='70%'></td>
+                        <td width="75%">
+                            <table width="100%">
+                                <span style="display: none" id="driverId"></span>
+                                <tr>
+                                    <td width="45%" colspan=3><b>Personal info</b></td>
+                                    <td width="5%"></td>
+                                    <td width="45%" colspan=3><b>Vehicle info</b></td>
+                                </tr>
+                                <tr>
+                                    <td colspan=7><br></td>
+                                </tr>
+                                <tr>
+                                    <td style="white-space:nowrap;">Shift ends:&nbsp;</td>
+                                    <td><input id="EditShiftInput" type="text" value="Text" disabled></td>
+                                    <td>
+                                        <button style="background-color: transparent;" type="button"
+                                                onclick="Selection.editField('EditShift')"><img id="EditShift"
+                                                                                                src="edit.png"
+                                                                                                alt="person" width='10'
+                                                                                                height='16'></button>
+                                    </td>
+                                    <td width="10%"></td>
+                                    <td>Passengers:&nbsp;</td>
+                                    <td><input id="EditPassengersInput" type="text" value="Text" disabled></td>
+                                    <td>
+                                        <button style="background-color: transparent;" type="button"
+                                                onclick="Selection.editField('EditPassengers')"><img id="EditPassengers"
+                                                                                                     src="edit.png"
+                                                                                                     alt="person"
+                                                                                                     width='10'
+                                                                                                     height='16'>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="white-space:nowrap;">Phone:&nbsp;</td>
+                                    <td><input id="EditPhoneInput" type="text" value="Text" disabled></td>
+                                    <td>
+                                        <button style="background-color: transparent;" type="button"
+                                                onclick="Selection.editField('EditPhone')"><img id="EditPhone"
+                                                                                                src="edit.png"
+                                                                                                alt="person" width='10'
+                                                                                                height='16'></button>
+                                    </td>
+                                    <td width="10%"></td>
+                                    <td>Luggage:&nbsp;</td>
+                                    <td><input id="EditLuggageInput" type="text" value="Text" disabled></td>
+                                    <td>
+                                        <button style="background-color: transparent;" type="button"
+                                                onclick="Selection.editField('EditLuggage')"><img id="EditLuggage"
+                                                                                                  src="edit.png"
+                                                                                                  alt="person"
+                                                                                                  width='10'
+                                                                                                  height='16'></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="white-space:nowrap;">Note:&nbsp;</td>
+                                    <td><input id="EditNoteInput" type="text" value="Text" disabled></td>
+                                    <td>
+                                        <button style="background-color: transparent;" type="button"
+                                                onclick="Selection.editField('EditNote')"><img id="EditNote"
+                                                                                               src="edit.png"
+                                                                                               alt="person" width='10'
+                                                                                               height='16'></button>
+                                    </td>
+                                    <td width="10%"></td>
+                                    <td>Brand:&nbsp;</td>
+                                    <td><input id="EditBrandInput" type="text" value="Text" disabled></td>
+                                    <td>
+                                        <button style="background-color: transparent;" type="button"
+                                                onclick="Selection.editField('EditBrand')"><img id="EditBrand"
+                                                                                                src="edit.png"
+                                                                                                alt="person" width='10'
+                                                                                                height='16'></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan=3></td>
+                                    <td width="10%"></td>
+                                    <td>Type:&nbsp;</td>
+                                    <td><input id="EditTypeInput" type="text" value="Text" disabled></td>
+                                    <td>
+                                        <button style="background-color: transparent;" type="button"
+                                                onclick="Selection.editField('EditType')"><img id="EditType"
+                                                                                               src="edit.png"
+                                                                                               alt="person" width='10'
+                                                                                               height='16'></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan=3></td>
+                                    <td width="10%"></td>
+                                    <td>Year:&nbsp;</td>
+                                    <td><input id="EditYearInput" type="text" value="Text" disabled></td>
+                                    <td>
+                                        <button style="background-color: transparent;" type="button"
+                                                onclick="Selection.editField('EditYear')"><img id="EditYear"
+                                                                                               src="edit.png"
+                                                                                               alt="person" width='10'
+                                                                                               height='16'></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
                     </tr>
-                    </table>
-                    <hr>
-                    <br>
-                    <p style="padding-left: 1cm;" align="left"><b>Past clients</b></p>
-                    <hr>
-                    <table width="100%">
+                </table>
+                <br><br>
+                <p style="padding-left: 1cm;" align="left"><b>Current client</b></p>
+                <hr>
+                <table width="100%">
+                    <tr align="left">
+                        <td style="white-space:nowrap;" width="25%"><img src="user-icon.jpg" width='20' height='20'>&nbsp;<span
+                                id="currentClientName">Customer name</span></td>
+                        <td id="currentClientFrom" style="white-space:nowrap;" width="25%">From</td>
+                        <td id="currentClientTo" style="white-space:nowrap;" width="25%">To</td>
+                        <td id="currentClientPrice" style="white-space:nowrap;" width="25%">Cena CZK</td>
+                    </tr>
+                </table>
+                <hr>
+                <br>
+                <p style="padding-left: 1cm;" align="left"><b>Past clients</b></p>
+                <hr>
+                <table width="100%">
                     <tr align="center">
                         <td style="white-space:nowrap;" width="25%"><b>Customer name</b></td>
                         <td style="white-space:nowrap;" width="25%"><b>From</b></td>
                         <td style="white-space:nowrap;" width="25%"><b>To</b></td>
                         <td style="white-space:nowrap;" width="25%"><b>Date</b></td>
                     </tr>
-                    </table>
-                    <hr>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" onclick="DiscardButton()" style="height:50px; width:200px" data-dismiss="modal">Close</button>
-                    </div>
-                    </div>
-                    </div>
-                    </div>   
-                </td>
+                </table>
+                <hr>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" style="height:50px; width:200px" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid text-center">
+    <div class="row content" style="height: 130%">
+        <div class="col-xs-2 sidenav">
+            <table id='side-panel' align="center" cellspacing="0" width="100%">
+                <tbody id="driverPanel">
+                <tr>
+                    <td id='panel-driver-picture' align='center' colspan=2>
+                        <button type="button" onclick="Selection.openDriverDetails($('#driverId').text());"
+                                data-toggle="modal" data-target="#DriverDetail" id="btnDriverDetails"><img
+                                src="person.png" alt="person" width='70%' height='70%'></button>
+                    </td>
                 </tr>
                 <tr>
-                    <td align='center' colspan=2><p><b><font id='panel-driver-name' size='6'>Driver name</font></b></p></td>
+                    <td align='center' colspan=2><p><b><font id='panel-driver-name' size='6'>Driver name</font></b></p>
+                    </td>
                 </tr>
                 <tr class="border_bottom">
                     <td colspan=2><p></p></td>
@@ -177,9 +277,9 @@
                 </tr>
                 <tr>
                     <td colspan=2 align='center'><p><b><font size='5'>Personal info</font></b></p>
-                </td>
+                    </td>
                 </tr>
-                
+
                 <tr>
                     <td><p></p></td>
                 </tr>
@@ -241,13 +341,16 @@
                 <tr>
                     <td><p></p></td>
                 </tr>
+                </tbody>
 
-
+                <tbody id="customerPanel">
                 <tr id='panel-customer-firstRow'>
-                    <td id='panel-customer-picture' align='center' colspan=2><img src="customer.png" alt="customer" width='60%' height='60%'></td>
+                    <td id='panel-customer-picture' align='center' colspan=2><img src="customer.png" alt="customer"
+                                                                                  width='60%' height='60%'></td>
                 </tr>
                 <tr>
-                    <td align='center' colspan=2><p><b><font id='panel-customer-name' size='6'>Customer name</font></b></p></td>
+                    <td align='center' colspan=2><p><b><font id='panel-customer-name' size='6'>Customer name</font></b>
+                    </p></td>
                 </tr>
                 <tr>
                     <td><p></p></td>
@@ -310,6 +413,7 @@
                         </table>
                     </td>
                 </tr>
+                </tbody>
             </table>
         </div>
         <div class="col-xs-8 text-left">
@@ -317,33 +421,56 @@
                 <div class="col-xs-2">
                 <p></p>
                     <div class="btn-group-vertical">
-                        <button type="button" class="btn btn-primary default" onclick="Filter.selectType(Filter.CarsAndCustomers); clickedFilterButton.call(this);">Cars and Customers</button>
-                        <button type="button" class="btn btn-default" onclick="Filter.selectType(Filter.Cars); clickedFilterButton.call(this);">Cars</button>
-                        <button type="button" class="btn btn-default" onclick="Filter.selectType(Filter.Customers); clickedFilterButton.call(this);">Customers</button>
+                        <button type="button" class="btn btn-primary default"
+                                onclick="Filter.selectType(Filter.CarsAndCustomers); clickedFilterButton.call(this);">
+                            Cars and Customers
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                onclick="Filter.selectType(Filter.Cars); clickedFilterButton.call(this);">Cars
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                onclick="Filter.selectType(Filter.Customers); clickedFilterButton.call(this);">Customers
+                        </button>
                     </div>
                 </div>
                 <div class="col-xs-2">
                     <p></p>
                     <div class="btn-group-vertical">
-                        <button type="button" class="btn btn-primary default" onclick="Filter.selectTaxiType(Filter.AllTaxis); clickedFilterButton.call(this);">All taxis</button>
-                        <button type="button" class="btn btn-default" onclick="Filter.selectTaxiType(Filter.BasicTaxis); clickedFilterButton.call(this);">Basic taxis</button>
-                        <button type="button" class="btn btn-default" onclick="Filter.selectTaxiType(Filter.PremiumTaxis); clickedFilterButton.call(this);">Premium taxis</button>
+                        <button type="button" class="btn btn-primary default"
+                                onclick="Filter.selectTaxiType(Filter.AllTaxis); clickedFilterButton.call(this);">All
+                            taxis
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                onclick="Filter.selectTaxiType(Filter.BasicTaxis); clickedFilterButton.call(this);">
+                            Basic taxis
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                onclick="Filter.selectTaxiType(Filter.PremiumTaxis); clickedFilterButton.call(this);">
+                            Premium taxis
+                        </button>
                     </div>
                 </div>
                 <div class="col-xs-2">
                     <p></p>
-                    <p>Passengers at least</p>
+                    <p>Seats at least</p>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary default" onclick="Filter.selectPassengers(1); clickedFilterButton.call(this);">1</button>
-                        <button type="button" class="btn btn-default"" onclick="Filter.selectPassengers(4); clickedFilterButton.call(this);">4</button>
-                        <button type="button" class="btn btn-default"" onclick="Filter.selectPassengers(5); clickedFilterButton.call(this);">5</button>
-                        <button type="button" class="btn btn-default"" onclick="Filter.selectPassengers(6); clickedFilterButton.call(this);">6</button>
+                        <button type="button" class="btn btn-primary default"
+                                onclick="Filter.selectPassengers(1); clickedFilterButton.call(this);">1
+                        </button>
+                        <button type="button" class="btn btn-default"
+                        " onclick="Filter.selectPassengers(4); clickedFilterButton.call(this);">4</button>
+                        <button type="button" class="btn btn-default"
+                        " onclick="Filter.selectPassengers(5); clickedFilterButton.call(this);">5</button>
+                        <button type="button" class="btn btn-default"
+                        " onclick="Filter.selectPassengers(6); clickedFilterButton.call(this);">6</button>
                         <div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 More <span class="caret"></span></button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#"" onclick="Filter.selectPassengers(7); clickedFilterButton.call(this);">7</a></li>
-                                <li><a href="#"" onclick="Filter.selectPassengers(8); clickedFilterButton.call(this);">8</a></li>
+                                <li><a href="#"" onclick="Filter.selectPassengers(7);
+                                    clickedFilterButton.call(this);">7</a></li>
+                                <li><a href="#"" onclick="Filter.selectPassengers(8);
+                                    clickedFilterButton.call(this);">8</a></li>
                             </ul>
                         </div>
                     </div>
@@ -352,16 +479,26 @@
                     <p></p>
                     <p>Luggage at least</p>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary default" onclick="Filter.selectLuggage(1); clickedFilterButton.call(this);">1</button>
-                        <button type="button" class="btn btn-default" onclick="Filter.selectLuggage(4); clickedFilterButton.call(this);">4</button>
-                        <button type="button" class="btn btn-default" onclick="Filter.selectLuggage(5); clickedFilterButton.call(this);">5</button>
-                        <button type="button" class="btn btn-default" onclick="Filter.selectLuggage(6); clickedFilterButton.call(this);">6</button>
+                        <button type="button" class="btn btn-primary default"
+                                onclick="Filter.selectLuggage(1); clickedFilterButton.call(this);">1
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                onclick="Filter.selectLuggage(4); clickedFilterButton.call(this);">4
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                onclick="Filter.selectLuggage(5); clickedFilterButton.call(this);">5
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                onclick="Filter.selectLuggage(6); clickedFilterButton.call(this);">6
+                        </button>
                         <div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 More <span class="caret"></span></button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#" onclick="Filter.selectLuggage(7); clickedFilterButton.call(this);">7</a></li>
-                                <li><a href="#" onclick="Filter.selectLuggage(8); clickedFilterButton.call(this);">8</a></li>
+                                <li><a href="#" onclick="Filter.selectLuggage(7); clickedFilterButton.call(this);">7</a>
+                                </li>
+                                <li><a href="#" onclick="Filter.selectLuggage(8); clickedFilterButton.call(this);">8</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -373,7 +510,9 @@
                 </div>                     
                 <div class="col-xs-2">
                     <p></p>
-                    <button type="button" class="btn btn-default btn-lg" onclick="Filter.clearAll(); clickedResetFilterButton();">Clear all filters</button>
+                    <button type="button" class="btn btn-default btn-lg"
+                            onclick="Filter.clearAll(); clickedResetFilterButton();">Clear all filters
+                    </button>
                 </div>
             </div>
             <div class="row">
@@ -467,70 +606,90 @@
             </tr>
             <tr>
                 <td width='10%'>
-                    <button type="button" class="btn btn-default btn-circleOK" data-toggle="modal" data-target="#Confirm" id="btnOK" onclick="OKButton()">
-             <img src="OK.png" width="100%" height="100%"/>
-        </button>
-        <div id="Confirm" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title"><b><center>Confirm new order?</center></b></h4>
+                    <button type="button" class="btn btn-default btn-circleOK" id="btnOK" onclick="OKButton()">
+                        <img src="OK.png" width="100%" height="100%"/>
+                    </button>
+                    <div id="Confirm" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title"><b>
+                                        <center>Confirm new order?</center>
+                                    </b></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <table>
+                                        <tr class="spaceUnder">
+                                            <td width="30%"><font size="3" color="gray">Trip:</font></td>
+                                            <td><font size="3"><label for="FromLabel" id="FromLabel"></label>
+                                                <img src="to_icon.png" width="6%" height="6%"/>
+                                                <label for="ToLabel" id="ToLabel"></label></font></td>
+                                        </tr>
+                                        <tr class="spaceUnder">
+                                            <td width="30%"><font size="3" color="gray">Date:</font></td>
+                                            <td><font size="3"><label for="DateLabel" id="DateLabel"></label></font>
+                                            </td>
+                                        </tr>
+                                        <tr class="spaceUnder">
+                                            <td width="30%"><font size="3" color="gray">Passengers:</font></td>
+                                            <td><font size="3"><label for="PassLabel" id="PassLabel"></label></font>
+                                            </td>
+                                        </tr>
+                                        <tr class="spaceUnder">
+                                            <td width="30%"><font size="3" color="gray">Luggage:</font></td>
+                                            <td><font size="3"><label for="LuggLabel" id="LuggLabel"></label></font>
+                                            </td>
+                                        </tr>
+                                        <tr class="spaceUnder">
+                                            <td width="30%"><font size="3" color="gray">VIP:</font></td>
+                                            <td><font size="3"><input type="checkbox" name="VIP" value="" id="VIPLabel"></font>
+                                            </td>
+                                        </tr>
+                                        <tr class="spaceUnder">
+                                            <td width="30%"><font size="3" color="gray">Estimated price:</font></td>
+                                            <td><font size="3"><label for="TripLabel" id="EstLabel"></label></font><span
+                                                    id="estPrice">Some price</span></td>
+                                        </tr>
+                                        <tr class="spaceUnder">
+                                            <td width="30%"><font size="3" color="gray">Drivers:</font></td>
+                                            <td>
+                                                <div id="availableDrivers" class="btn-group-vertical">
+                                                    <button type="button" class="btn btn-primary" style="width: 250px;">
+                                                        Driver1
+                                                    </button>
+                                                    <button type="button" class="btn btn-default" style="width: 250px;">
+                                                        Driver2
+                                                    </button>
+                                                    <button type="button" class="btn btn-default" style="width: 250px;">
+                                                        Driver3
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="spaceUnder">
+                                            <td width="30%"><font size="3" color="gray">Note:</font></td>
+                                            <td><input class="form-control" id="NoteBox" type="text"
+                                                       style="width: 250px;"/></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success" onclick="SubmitOrderButton()"
+                                            style="height:50px; width:200px" data-dismiss="modal">Confirm
+                                    </button>
+                                    <button type="button" class="btn btn-danger" onclick="DiscardButton()"
+                                            style="height:50px; width:200px" data-dismiss="modal">Discard
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <table>
-                            <tr class="spaceUnder">
-                                <td width="30%"><font size="3" color="gray">Trip:</font></td>
-                                <td><font size="3"><label for="FromLabel" id="FromLabel"></label>
-                                <img src="to_icon.png" width="6%" height="6%"/>
-                                <label for="ToLabel" id="ToLabel"></label></font></td>
-                            </tr>
-                            <tr class="spaceUnder">
-                                <td width="30%"><font size="3" color="gray">Date:</font></td>
-                                <td><font size="3"><label for="DateLabel" id="DateLabel"></label></font></td>
-                            </tr>
-                            <tr class="spaceUnder">
-                                <td width="30%"><font size="3" color="gray">Passengers:</font></td>
-                                <td><font size="3"><label for="PassLabel" id="PassLabel"></label></font></td>
-                            </tr>
-                            <tr class="spaceUnder">
-                                <td width="30%"><font size="3" color="gray">Luggage:</font></td>
-                                <td><font size="3"><label for="LuggLabel" id="LuggLabel"></label></font></td>
-                            </tr>
-                            <tr class="spaceUnder">
-                                <td width="30%"><font size="3" color="gray">VIP:</font></td>
-                                <td><font size="3"><input type="checkbox" name="VIP" value="" id="VIPLabel"></font></td>
-                            </tr>
-                            <tr class="spaceUnder">
-                                <td width="30%"><font size="3" color="gray">Estimated price:</font></td>
-                                <td><font size="3"><label for="TripLabel" id="EstLabel"></label></font>Some price</td>
-                            </tr>
-                            <tr class="spaceUnder">
-                                <td width="30%"><font size="3" color="gray">Drivers:</font></td>
-                                <td>
-                                <div id="availableDrivers" class="btn-group-vertical">
-                                    <button type="button" class="btn btn-primary" style="width: 250px;">Driver1</button>
-                                    <button type="button" class="btn btn-default" style="width: 250px;">Driver2</button>
-                                    <button type="button" class="btn btn-default" style="width: 250px;">Driver3</button>
-                                </div></td>
-                            </tr>
-                            <tr class="spaceUnder">
-                                <td width="30%"><font size="3" color="gray">Note:</font></td>
-                                <td><input class="form-control" id="NoteBox" type="text" style="width: 250px;"/></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-success" onclick="SubmitOrderButton()" style="height:50px; width:200px" data-dismiss="modal">Confirm</button>
-                        <button type="button" class="btn btn-danger" onclick="DiscardButton()" style="height:50px; width:200px" data-dismiss="modal">Discard</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-         <a href='#' class="btn btn-default btn-circleFalse">
-            <img src="false.png" width="100%" height="100%"/>
-        </a>
-        </td></tr>
+                    <a href='#' class="btn btn-default btn-circleFalse">
+                        <img src="false.png" width="100%" height="100%"/>
+                    </a>
+                </td>
+            </tr>
         </div>
         </table>
 

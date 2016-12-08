@@ -36,6 +36,8 @@
     };
 
     ns.Map.clickHandler = function (event) {
+        hidePanels();
+
         var latitude = event.latLng.lat();
         var longitude = event.latLng.lng();
         var pos = new google.maps.LatLng(latitude, longitude);

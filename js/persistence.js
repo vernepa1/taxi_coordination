@@ -70,7 +70,15 @@
         this.note = "";
     };
 
+<<<<<<< HEAD
     ns.Vehicle = function (seats, luggage, brand, type, year, premium) {
+=======
+    ns.Person.prototype.getFullName = function () {
+        return this.name + " " + this.surname;
+    };
+
+    ns.Vehicle = function (seats, luggage, brand, type, year) {
+>>>>>>> 5928d4dfe06325873a8fc66a9bc504557a6a25cf
         this.id =  ns.Persistence.generateId();
         this.seats = seats;
         this.luggage = luggage;
@@ -90,14 +98,17 @@
         this.customer = null;
     };
 
-    ns.Customer = function (person, taxi, fromLoc, toLoc) {
+    ns.Customer = function (person, taxi, fromLoc, toLoc, fromAdd, toAdd, price) {
         this.id = ns.Persistence.generateId();
         this.person = person;
         this.taxi = taxi;
         this.history = [];
         this.fromLoc = fromLoc;
         this.toLoc = toLoc;
-    }
+        this.fromAdd = fromAdd;
+        this.toAdd = toAdd;
+        this.price = price;
+    };
 
 
     
