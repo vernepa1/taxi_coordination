@@ -77,7 +77,7 @@ Filter.filterTaxis = function(taxis) {
 Filter.filterCustomers = function(customers) {
     filteredCustomers = [];
     for(var i = 0; i < customers.length; i++){
-        if(Filter.shouldShowCustomer(customers[i])) filteredCustomers.push(customers[i]);
+        if(Filter.shouldShowCustomer(customers[i].person)) filteredCustomers.push(customers[i]);
     }
     return filteredCustomers;
 }
