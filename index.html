@@ -360,6 +360,9 @@
                     <td align='center' colspan=2><p><b><font id='panel-driver-name' size='6'>Driver name</font></b></p>
                     </td>
                 </tr>
+                 <tr>
+                    <td colspan = 2><button type="button" class="btn btn-danger" style="width:100%" onclick="hideDriverPanel()">Hide driver</button></td>
+                </tr>
                 <tr class="border_bottom">
                     <td colspan=2><p></p></td>
                 </tr>
@@ -446,6 +449,9 @@
                 <tr>
                     <td align='center' colspan=2><p><b><font id='panel-customer-name' size='6'>Customer name</font></b>
                     </p></td>
+                </tr>
+                 <tr>
+                    <td colspan = 2><button type="button" class="btn btn-danger" style="width:100%" onclick="hideCustomerPanel()">Hide customer</button></td>
                 </tr>
                 <tr>
                     <td><p></p></td>
@@ -789,7 +795,7 @@
                         </div>
                     </div>
                     <a href='#' class="btn btn-default btn-circleFalse">
-                        <img src="false.png" width="100%" height="100%"/>
+                        <img src="false.png" width="100%" height="100%" onclick="ResetOrderForm()"/>
                     </a>
                 </td>
             </tr>
