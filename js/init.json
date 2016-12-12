@@ -72,5 +72,18 @@
       "lat": 50.0850558,
       "long": 14.4258467
     }
+  ],
+  "customers": [
+    {
+      "person": {
+        "name": "Miloš",
+        "surname": "Zeman",
+        "phone": "+420829494030"
+      },
+      "shiftEnd": "13:00",
+      "fromLat": 50.088777,
+      "fromLong": 14.421863,
+      "fromAddr": "Dlouhá 610/4, Praha"
+    }
   ]
 }

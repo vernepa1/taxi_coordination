@@ -126,7 +126,7 @@ $(function () {
 
     $.getJSON("js/init.json?" + Date.now())
         .done(function (d) {
-            db.initTaxisFromJson(d);
+            db.initDBFromJson(d);
             map.updateMap(db);
         });
 

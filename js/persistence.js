@@ -29,13 +29,19 @@
         this.customers.push(customer);
     };
 
-    ns.Persistence.prototype.initTaxisFromJson = function(json) {
+    ns.Persistence.prototype.initDBFromJson = function(json) {
         var self = this;
         $.each(json.taxis, function (i, t) {
             var person = new ns.Person(t.driver.name, t.driver.surname, t.driver.phone);
             var vehicle = new ns.Vehicle(t.vehicle.seats, t.vehicle.luggage, t.vehicle.brand, t.vehicle.type, t.vehicle.year, t.vehicle.premium);
             var taxi = new ns.Taxi(person, vehicle, t.lat, t.long, t.shiftEnd);
             self.addTaxi(taxi);
+        });
+        $.each(json.customers, function (i, t) {
+            var person = new ns.Person(t.person.name, t.person.surname, t.person.phone);
+            var loc = new google.maps.LatLng(t.fromLat, t.fromLong);
+            var customer = new ns.Customer(person, null, loc, null, t.fromAddr, null);
+            self.addCustomer(customer);
         });
     };
 
