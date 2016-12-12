@@ -1,10 +1,13 @@
 
-
-
-function DiscardDriverButton() {
-    // To do
-    
-    
+function IncrementValue(id, val) {
+   if (val == 0 && parseInt($('#' + id).val(),10) == 0) {
+       return;
+   }
+   if (val == 1) {
+       $('#' + id).val(parseInt($('#' + id).val(),10) + 1); 
+   } else {
+       $('#' + id).val( parseInt($('#' + id).val(),10) - 1);
+   }
 }
 
 function changeIcon(domImg,srcImage) {
@@ -50,6 +53,9 @@ function showAvailableDrivers() {
                 click: buttonClassSwitcher
             });
             $(".availableDrivers").append(button);
+            if (i == 0) {
+                $("#" + t.id).append($('<img>',{id:'lock',src:'lock.png', width:'20px', height:'20px'}));
+            }
         });
     } else {
         var button = $("<button/>", {
@@ -82,8 +88,10 @@ function SubmitTaxiAssignement(customer) {
 function buttonClassSwitcher() {
     $(this).siblings().removeClass("btn-primary");
     $(this).siblings().addClass("btn-default");
+    $(this).siblings().children('img').remove();
     $(this).removeClass("btn-default");
     $(this).addClass("btn-primary");
+    $(this).append($('<img>',{id:'lock',src:'lock.png', width:'20px', height:'20px'}));
 }
 
 function clickedFilterButton() {
@@ -129,10 +137,12 @@ function ResetOrderForm() {
 
 function hideCustomerPanel() {
     $('#customerPanel').hide();
+    Selection.selectedCustomer = null;
 }
 
 function hideDriverPanel() {
     $('#driverPanel').hide();
+    Selection.selectedTaxi = null;
 }
 
 function hideTaxiPanel() {
