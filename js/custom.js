@@ -31,31 +31,51 @@ function OKButton() {
         $('#PassLabel').html($('#PassBox').val());
         $('#LuggLabel').html($('#LuggBox').val());
         $("#VIPLabel").prop("checked", document.getElementById('VIPBox').checked);
-
-        //show nearest drivers - shows all of them, does not matter now
-        $("#availableDrivers").empty();
-        var taxis = Taxi.Persistence.Persistence.getInstance().getFreeTaxis();
-        if (taxis.length > 0) {
-            $.each(taxis, function (i, t) {
-                var button = $("<button/>", {
-                    text: t.driver.name + " " + t.driver.surname,
-                    class: "btn "+ (i == 0 ? "btn-primary" : "btn-default"),
-                    style: "width: 250px;",
-                    id: t.id,
-                    click: buttonClassSwitcher
-                });
-                $("#availableDrivers").append(button);
-            });
-        } else {
-            var button = $("<button/>", {
-                text: "No driver available",
-                class: "btn btn-error",
-                style: "width: 250px;"
-            });
-            $("#availableDrivers").append(button);
-        }
+        showAvailableDrivers();
         $('#Confirm').modal();
     }
+}
+
+function showAvailableDrivers() {
+    //show nearest drivers - shows all of them, does not matter now
+    $(".availableDrivers").empty();
+    var taxis = Taxi.Persistence.Persistence.getInstance().getFreeTaxis();
+    if (taxis.length > 0) {
+        $.each(taxis, function (i, t) {
+            var button = $("<button/>", {
+                text: t.driver.name + " " + t.driver.surname,
+                class: "btn "+ (i == 0 ? "btn-primary" : "btn-default"),
+                style: "width: 250px;",
+                id: t.id,
+                click: buttonClassSwitcher
+            });
+            $(".availableDrivers").append(button);
+        });
+    } else {
+        var button = $("<button/>", {
+            text: "No driver available",
+            class: "btn btn-error",
+            style: "width: 250px;"
+        });
+        $(".availableDrivers").append(button);
+    }
+}
+
+function assignTaxi(customer) {
+    showAvailableDrivers();
+    $("#submitTaxiAssignement").on("click", function () {
+        SubmitTaxiAssignement(customer);
+    });
+    $('#taxiAssignement').modal();
+}
+
+function SubmitTaxiAssignement(customer) {
+    var db = Taxi.Persistence.Persistence.getInstance();
+    var id = $("#availableDrivers2").find("button.btn-primary").attr("id");
+    var taxi = db.getTaxi(id);
+    customer.taxi = taxi;
+    taxi.customer = customer;
+    Taxi.Map.Map.getInstance().updateMap();
 }
 
 
@@ -86,7 +106,7 @@ function clickedResetFilterButton() {
 function SubmitOrderButton() {
     var db = Taxi.Persistence.Persistence.getInstance();
     //TODO co delat kdyz neni volny driver, tedy trida je btn-error
-    var id = $("#availableDrivers").find("button.btn-primary").attr("id");
+    var id = $("#availableDrivers1").find("button.btn-primary").attr("id");
     var taxi = db.getTaxi(id);
     var person = new Taxi.Persistence.Person("Unknown", "Customer", "+420" + Math.floor((Math.random() * 999999999) + 100000000));
     var customer = new Taxi.Persistence.Customer(person, taxi, null, null, $('#FromBox').val(), $('#ToBox').val(), $('#estPrice').text());

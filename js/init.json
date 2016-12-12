@@ -83,7 +83,11 @@
       "shiftEnd": "13:00",
       "fromLat": 50.088777,
       "fromLong": 14.421863,
-      "fromAddr": "Dlouhá 610/4, Praha"
+      "fromAddr": "Dlouhá 610/4, Praha",
+      "toLat": 50.081328,
+      "toLong": 14.405576,
+      "toAddr": "Vítězná 442/14",
+      "price": 250
     }
   ]
 }

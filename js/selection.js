@@ -129,7 +129,6 @@ Selection.selectCustomer = function(customer) {
     if(!customer) return;
     $('#customerPanel').show();
 
-    console.log(customer.taxi);
     if (customer.taxi != null && Selection.selectedTaxi != customer.taxi) {
         Selection.selectTaxi(customer.taxi);
     }
@@ -144,6 +143,12 @@ Selection.selectCustomer = function(customer) {
     document.getElementById('ex2').oninput = function () {
         customer.person.note = this.value;
     };
+
+    if (customer.taxi == null) {
+        $("#assignTaxi").show();
+    } else {
+        $("#assignTaxi").hide();
+    }
 };
 
 Selection.selectCustomerId = function(id) {
@@ -158,7 +163,7 @@ Selection.unselectCustomerIfNotIn = function(customers) {
 }
 
 Selection.isSelectedCustomerId = function(customerId) {
-    return (Selection.selectedCostumer && Selection.selectedCostumer.id == customerId);
+    return (Selection.selectedCustomer && Selection.selectedCustomer.id == customerId);
 }
 
 Selection.isCustomerSelected = function() {

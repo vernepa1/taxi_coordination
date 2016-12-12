@@ -39,8 +39,9 @@
         });
         $.each(json.customers, function (i, t) {
             var person = new ns.Person(t.person.name, t.person.surname, t.person.phone);
-            var loc = new google.maps.LatLng(t.fromLat, t.fromLong);
-            var customer = new ns.Customer(person, null, loc, null, t.fromAddr, null);
+            var fromLoc = new google.maps.LatLng(t.fromLat, t.fromLong);
+            var toLoc = new google.maps.LatLng(t.toLat, t.toLong);
+            var customer = new ns.Customer(person, null, fromLoc, toLoc, t.fromAddr, t.toAddr, t.price);
             self.addCustomer(customer);
         });
     };
