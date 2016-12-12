@@ -29,6 +29,11 @@
         this.customers.push(customer);
     };
 
+    ns.Persistence.prototype.deleteCustomer = function (customer) {
+        var index = this.customers.indexOf(customer);
+        this.customers.splice(index, 1);
+    };
+
     ns.Persistence.prototype.initDBFromJson = function(json) {
         var self = this;
         $.each(json.taxis, function (i, t) {
