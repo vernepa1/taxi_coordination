@@ -137,12 +137,12 @@ function ResetOrderForm() {
 
 function hideCustomerPanel() {
     $('#customerPanel').hide();
-    Selection.selectedCustomer = null;
+    Selection.unselectCustomer();
 }
 
 function hideDriverPanel() {
     $('#driverPanel').hide();
-    Selection.selectedTaxi = null;
+    Selection.unselectDriver();
 }
 
 function hideTaxiPanel() {

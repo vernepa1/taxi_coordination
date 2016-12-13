@@ -56,7 +56,7 @@ Selection.selectTaxiMarker = function (marker) {
 Selection.unselectTaxiIfNotIn = function (taxis) {
     if (!taxis.includes(Selection.selectedTaxi)) {
         Selection.selectedTaxi = null;
-        hideTaxiPanel();
+        $('#driverPanel').hide();;
     }
 }
 
@@ -199,7 +199,7 @@ Selection.selectCustomerId = function (id) {
 Selection.unselectCustomerIfNotIn = function (customers) {
     if (!customers.includes(Selection.selectedCustomer)) {
         Selection.selectedCustomer = null;
-        hideCustomerPanel();
+        $('#customerPanel').hide();
     }
 }
 
@@ -217,4 +217,16 @@ Selection.unselectAll = function () {
     hideCustomerPanel();
     hideTaxiPanel();
     Taxi.Map.Map.getInstance().updateMap();
+}
+
+Selection.unselectCustomer = function () {
+    Selection.selectedCustomer = null;
+    Taxi.Map.Map.getInstance().updateMap();
+
+}
+
+Selection.unselectDriver = function () {
+    Selection.selectedTaxi = null;
+    Taxi.Map.Map.getInstance().updateMap();
+
 }
