@@ -17,85 +17,6 @@
     <script src="js/map.js"></script>
     <script src="js/custom.js"></script>
     <script src="js/filter.js"></script>
-    <style>
-        /* Remove the navbar's default margin-bottom and rounded borders */
-        .navbar {
-            margin-bottom: 0;
-            border-radius: 0;
-        }
-
-        /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-        .row.content {
-            height: 450px
-        }
-
-        /* Set gray background color and 100% height */
-        .sidenav {
-            padding-top: 20px;
-            background-color: #f1f1f1;
-            height: 100%;
-        }
-
-        /* Set black background color, white text and some padding */
-        footer {
-            background-color: #555;
-            color: white;
-            padding: 15px;
-        }
-
-        /* On small screens, set height to 'auto' for sidenav and grid */
-        @media screen and (max-width: 767px) {
-            .sidenav {
-                height: 100%;
-                padding: 15px;
-            }
-
-            .row.content {
-                height: auto;
-            }
-        }
-
-        table#orders {
-            border-collapse: separate;
-            border-spacing: 0 9px;
-        }
-
-        tr.border_bottom td {
-            border-bottom: 1pt solid black;
-        }
-
-        tr.spaceUnder > td {
-            padding-bottom: 10pt;
-        }
-
-        input {
-            border: none;
-            background: transparent;
-            width: 100%;
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
-        }
-
-        .btn-circleOK {
-            width: 100px;
-            height: 100px;
-            text-align: center;
-            padding: 6px 0;
-            font-size: 12px;
-            line-height: 1.42;
-            border-radius: 50px;
-        }
-
-        .btn-circleFALSE {
-            width: 50px;
-            height: 50px;
-            text-align: center;
-            padding: 6px 0;
-            font-size: 12px;
-            line-height: 1.42;
-            border-radius: 25px;
-        }
-    </style>
 </head>
 <body>
 
@@ -254,7 +175,7 @@
     </div>
 </div>
 <div class="container-fluid text-center">
-    <div class="row content" style="height: 130%">
+    <div class="row content">
         <div class="col-xs-2 sidenav">
             <table id='side-panel' align="center" cellspacing="0" width="100%">
                 <tbody id="driverPanel">
@@ -424,7 +345,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-xs-8 text-left">
+        <div class="col-xs-8 text-left" id="main-column">
             <div class="row" id="filters">
                 <div class="col-xs-2">
                 <p></p>
@@ -523,12 +444,12 @@
                     </button>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" id="progressRow">
                 <div id="myProgress">
                     <div id="myBar"></div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" id="mapRow">
                 <div id="map"></div>
             </div>
         </div>

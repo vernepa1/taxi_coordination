@@ -5,8 +5,20 @@ h1{
     text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 40px;
 }
 
+.content {
+    height: 100%;
+}
+
 #map {
-    width: 100%; height: 100%;
+    width: 100%;
+    flex-grow: 1;
+}
+
+#main-column {
+    padding-top: 20px;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
 }
 
 .info-window {
@@ -23,9 +35,80 @@ h1{
     height: 10px;
     background-color: grey;
 }
+
+#progressRow {
+}
+
+#mapRow {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column;
+}
+
 #myBar {
     position: absolute;
     width: 1%;
     height: 100%;
     background-color: green;
+}
+
+/* Remove the navbar's default margin-bottom and rounded borders */
+.navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+/* Set gray background color and 100% height */
+.sidenav{
+    padding-top: 20px  !important;
+    min-height: 100%  !important;
+    background-color: #f1f1f1 !important;
+}
+
+/* Set black background color, white text and some padding */
+footer {
+    background-color: #555;
+    color: white;
+    padding: 15px;
+}
+
+table#orders {
+    border-collapse: separate;
+    border-spacing: 0 9px;
+}
+
+tr.border_bottom td {
+    border-bottom: 1pt solid black;
+}
+
+tr.spaceUnder > td {
+    padding-bottom: 10pt;
+}
+
+input {
+    border: none;
+    background: transparent;
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.btn.btn-circleOK {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    padding: 0px;
+    font-size: 12px;
+    line-height: 1.42;
+    border-radius: 50px;
+}
+
+.btn.btn-circleFALSE {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    padding: 0px;
+    font-size: 12px;
+    line-height: 1.42;
+    border-radius: 25px;
 }
