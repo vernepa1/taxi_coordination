@@ -86,12 +86,13 @@ function SubmitTaxiAssignement(customer) {
 
 
 function buttonClassSwitcher() {
+    //$(this).children().find("<img>").remove();
     $(this).siblings().removeClass("btn-primary");
     $(this).siblings().addClass("btn-default");
     $(this).siblings().children('img').remove();
     $(this).removeClass("btn-default");
     $(this).addClass("btn-primary");
-    $(this).append($('<img>',{id:'lock',src:'lock.png', width:'20px', height:'20px'}));
+    //$(this).append($('<img>',{id:'lock',src:'lock.png', width:'20px', height:'20px'}));
 }
 
 function clickedFilterButton() {
