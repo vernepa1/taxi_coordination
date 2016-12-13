@@ -50,11 +50,12 @@ function showAvailableDrivers() {
                 class: "btn "+ (i == 0 ? "btn-primary" : "btn-default"),
                 style: "width: 250px;",
                 id: t.id,
-                click: buttonClassSwitcher
+                click: buttonClassSwitcherForOrder
             });
             $(".availableDrivers").append(button);
             if (i == 0) {
                 $("#" + t.id).append($('<img>',{id:'lock',src:'lock.png', width:'20px', height:'20px'}));
+                $(button).append($('<img>',{id:'lock',src:'lock.png', width:'20px', height:'20px'}));
             }
         });
     } else {
@@ -84,15 +85,23 @@ function SubmitTaxiAssignement(customer) {
     Taxi.Map.Map.getInstance().updateMap();
 }
 
+function buttonClassSwitcherForOrder() {
+    $(this).siblings().removeClass("btn-primary");
+    $(this).siblings().addClass("btn-default");
+    $(this).removeClass("btn-default");
+    $(this).addClass("btn-primary");
+	 $(this).siblings().children('img').remove();
+	 $(this).children('img').remove();
+    $(this).append($('<img>',{id:'lock',src:'lock.png', width:'20px', height:'20px'}));
+}
+
 
 function buttonClassSwitcher() {
-    //$(this).children().find("<img>").remove();
     $(this).siblings().removeClass("btn-primary");
     $(this).siblings().addClass("btn-default");
     $(this).siblings().children('img').remove();
     $(this).removeClass("btn-default");
     $(this).addClass("btn-primary");
-    //$(this).append($('<img>',{id:'lock',src:'lock.png', width:'20px', height:'20px'}));
 }
 
 function clickedFilterButton() {
