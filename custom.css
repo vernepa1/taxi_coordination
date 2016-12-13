@@ -59,10 +59,11 @@ h1{
 }
 
 /* Set gray background color and 100% height */
-.sidenav{
-    padding-top: 20px  !important;
-    min-height: 100%  !important;
-    background-color: #f1f1f1 !important;
+.content .sidenav{
+    padding-top: 20px;
+    height: 100%;
+    background-color: #f1f1f1;
+    overflow-y: auto;
 }
 
 /* Set black background color, white text and some padding */
