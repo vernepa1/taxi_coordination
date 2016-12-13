@@ -4,10 +4,10 @@ Selection.selectedTaxi = null;
 Selection.selectedCustomer = null;
 Selection.db = Taxi.Persistence.Persistence.getInstance();
 
-Selection.selectTaxi = function(taxi) {
+Selection.selectTaxi = function (taxi) {
     Selection.selectedTaxi = taxi;
     Taxi.Map.Map.getInstance().updateMap();
-    if(!taxi) return;
+    if (!taxi) return;
     $('#driverPanel').show();
     if (taxi.customer != null) {
         this.selectCustomer(taxi.customer);
@@ -17,21 +17,21 @@ Selection.selectTaxi = function(taxi) {
     //alert("taxi " + taxi.id + 
     //    " (vehicle " + vehicle.id + " - " + vehicle.brand + " " + vehicle.type + 
     //    ", driver " + driver.id + " - " + driver.surname + ") clicked");
-    document.getElementById('panel-driver-name').innerHTML 
+    document.getElementById('panel-driver-name').innerHTML
         = driver.name + ' ' + driver.surname;
-    document.getElementById('panel-driver-shiftEnd').innerHTML 
+    document.getElementById('panel-driver-shiftEnd').innerHTML
         = taxi.shiftEnd;
-    document.getElementById('panel-driver-phone').innerHTML 
+    document.getElementById('panel-driver-phone').innerHTML
         = driver.phone;
-    document.getElementById('ex1').value 
+    document.getElementById('ex1').value
         = driver.note;
-    document.getElementById('panel-driver-passengers').innerHTML 
+    document.getElementById('panel-driver-passengers').innerHTML
         = vehicle.seats;
-    document.getElementById('panel-driver-luggage').innerHTML 
+    document.getElementById('panel-driver-luggage').innerHTML
         = vehicle.luggage;
-    document.getElementById('panel-driver-brand').innerHTML 
+    document.getElementById('panel-driver-brand').innerHTML
         = vehicle.brand;
-    document.getElementById('panel-driver-type').innerHTML 
+    document.getElementById('panel-driver-type').innerHTML
         = vehicle.type;
     document.getElementById('panel-driver-year').innerHTML
         = vehicle.year;
@@ -45,33 +45,32 @@ Selection.selectTaxi = function(taxi) {
 
 };
 
-Selection.selectTaxiId = function(id) {
+Selection.selectTaxiId = function (id) {
     Selection.selectTaxi(db.getTaxi(id));
 };
 
-Selection.selectTaxiMarker = function(marker) {
+Selection.selectTaxiMarker = function (marker) {
     Selection.selectTaxiId(marker.taxiId);
 }
 
-Selection.unselectTaxiIfNotIn = function(taxis) {
-    if(!taxis.includes(Selection.selectedTaxi)) {
+Selection.unselectTaxiIfNotIn = function (taxis) {
+    if (!taxis.includes(Selection.selectedTaxi)) {
         Selection.selectedTaxi = null;
         hideTaxiPanel();
     }
 }
 
-Selection.isSelectedTaxiId = function(taxiId) {
+Selection.isSelectedTaxiId = function (taxiId) {
     return (Selection.selectedTaxi && Selection.selectedTaxi.id == taxiId);
 }
 
-Selection.isTaxiSelected = function() {
+Selection.isTaxiSelected = function () {
     return !(!Selection.selectedTaxi);
 }
 
 
 Selection.openDriverDetails = function (id) {
     var taxi = db.getTaxi(id);
-    console.log(taxi);
     $('#EditShiftInput').val(taxi.shiftEnd);
     $('#EditPhoneInput').val(taxi.driver.phone);
     $('#EditNoteInput').val(taxi.driver.note);
@@ -96,23 +95,59 @@ Selection.openDriverDetails = function (id) {
 
 };
 
+Selection.openCustomerDetails = function (customer) {
+    $('#EditCustomerPhoneInput').val(customer.person.phone);
+    $('#EditCustomerNoteInput').val(customer.person.note);
+
+    Selection.setCustomerDetailsOrderFields(customer);
+
+    $("#cancelCurrentOrder").on("click", function () {
+        Taxi.Persistence.Persistence.getInstance().deleteCustomer(Selection.selectedCustomer);
+        $("#CustomerDetail").modal("toggle");
+        Selection.unselectAll();
+    });
+};
+
+
+Selection.setCustomerDetailsOrderFields = function(customer) {
+    var d = new Date();
+    $('#currentOrderDate').text(d.getDate() + "." + d.getMonth() + ", " + d.getHours() + ":" + d.getMinutes());
+    $('#currentOrderFrom').text(customer.fromAdd.substring(0, 25));
+    $('#currentOrderTo').text(customer.toAdd.substring(0, 25));
+    $('#currentOrderPrice').text(customer.price);
+}
 
 Selection.editField = function (name) {
-    if (document.getElementById(name + 'Input').style.border=="1px solid black") {
+    if (document.getElementById(name + 'Input').style.border == "1px solid black") {
         $('#' + name + 'Input').prop("disabled", true);
-        changeIcon(document.getElementById(name),"edit.png");
-        document.getElementById(name + 'Input').style.border="0px solid black";
+        changeIcon(document.getElementById(name), "edit.png");
+        document.getElementById(name + 'Input').style.border = "0px solid black";
         var taxi = db.getTaxi($('#driverId').text());
         this.saveTaxiByFields(taxi);
         this.selectTaxi(taxi);
     } else {
         $('#' + name + 'Input').prop("disabled", false);
         changeIcon(document.getElementById(name), "save.png");
-        document.getElementById(name + 'Input').style.border="1px solid black";
+        document.getElementById(name + 'Input').style.border = "1px solid black";
     }
 };
 
-Selection.saveTaxiByFields = function(taxi) {
+Selection.editCustomerField = function (name) {
+    if (document.getElementById(name + 'Input').style.border == "1px solid black") {
+        $('#' + name + 'Input').prop("disabled", true);
+        changeIcon(document.getElementById(name), "edit.png");
+        document.getElementById(name + 'Input').style.border = "0px solid black";
+        var customer = Selection.selectedCustomer;
+        this.saveCustomerByFields(customer);
+        this.selectCustomer(customer);
+    } else {
+        $('#' + name + 'Input').prop("disabled", false);
+        changeIcon(document.getElementById(name), "save.png");
+        document.getElementById(name + 'Input').style.border = "1px solid black";
+    }
+};
+
+Selection.saveTaxiByFields = function (taxi) {
     taxi.shiftEnd = $('#EditShiftInput').val();
     taxi.driver.phone = $('#EditPhoneInput').val();
     taxi.driver.note = $('#EditNoteInput').val();
@@ -123,20 +158,26 @@ Selection.saveTaxiByFields = function(taxi) {
     taxi.vehicle.type = $('#EditTypeInput').val();
     taxi.vehicle.year = $('#EditYearInput').val();
 };
-Selection.selectCustomer = function(customer) {
+
+Selection.saveCustomerByFields = function (customer) {
+    customer.person.phone = $('#EditCustomerPhoneInput').val();
+    customer.person.note = $('#EditCustomerNoteInput').val();
+};
+
+Selection.selectCustomer = function (customer) {
     Selection.selectedCustomer = customer;
     Taxi.Map.Map.getInstance().updateMap();
-    if(!customer) return;
+    if (!customer) return;
     $('#customerPanel').show();
 
     if (customer.taxi != null && Selection.selectedTaxi != customer.taxi) {
         Selection.selectTaxi(customer.taxi);
     }
-    document.getElementById('panel-customer-name').innerHTML 
+    document.getElementById('panel-customer-name').innerHTML
         = customer.person.name + ' ' + customer.person.surname;
-    document.getElementById('panel-customer-phone').innerHTML 
+    document.getElementById('panel-customer-phone').innerHTML
         = customer.person.phone;
-    document.getElementById('ex2').value 
+    document.getElementById('ex2').value
         = customer.person.note;
     document.getElementById('panel-customer-history'); //todo
 
@@ -151,29 +192,29 @@ Selection.selectCustomer = function(customer) {
     }
 };
 
-Selection.selectCustomerId = function(id) {
+Selection.selectCustomerId = function (id) {
     Selection.selectCustomer(db.getCustomer(id));
 };
 
-Selection.unselectCustomerIfNotIn = function(customers) {
-    if(!customers.includes(Selection.selectedCustomer)) {
+Selection.unselectCustomerIfNotIn = function (customers) {
+    if (!customers.includes(Selection.selectedCustomer)) {
         Selection.selectedCustomer = null;
         hideCustomerPanel();
     }
 }
 
-Selection.isSelectedCustomerId = function(customerId) {
+Selection.isSelectedCustomerId = function (customerId) {
     return (Selection.selectedCustomer && Selection.selectedCustomer.id == customerId);
 }
 
-Selection.isCustomerSelected = function() {
+Selection.isCustomerSelected = function () {
     return !(!Selection.selectedCostumer);
 }
 
-Selection.unselectAll = function() {
+Selection.unselectAll = function () {
     Selection.selectedCustomer = null;
     Selection.selectedTaxi = null;
     hideCustomerPanel();
-    hideTaxiPanel();    
+    hideTaxiPanel();
     Taxi.Map.Map.getInstance().updateMap();
 }
