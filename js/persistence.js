@@ -30,6 +30,7 @@
     };
 
     ns.Persistence.prototype.deleteCustomer = function (customer) {
+        customer.taxi.customer = null;
         var index = this.customers.indexOf(customer);
         this.customers.splice(index, 1);
     };
