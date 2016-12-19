@@ -14,7 +14,6 @@
             center: location,
             zoom: 16,
             panControl: false,
-            scrollwheel: false,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         this.map = new google.maps.Map(mapCanvas, mapOptions);
