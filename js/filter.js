@@ -46,23 +46,25 @@ Filter.shouldShowTaxi = function(taxi) {
     if(Filter.taxiType === Filter.BasicTaxis && taxi.vehicle.premium) return false;
     if(Filter.passengers > taxi.vehicle.seats) return false;
     if(Filter.luggage > taxi.vehicle.luggage) return false;
+	var re = new RegExp(Filter.text, 'gi');
     return (
-        taxi.driver.name.includes(Filter.text) || 
-        taxi.driver.surname.includes(Filter.text) ||
-        taxi.driver.phone.includes(Filter.text) ||
-        taxi.vehicle.brand.includes(Filter.text) ||
-        taxi.vehicle.type.includes(Filter.text) ||
-        taxi.driver.note.includes(Filter.text)
+        taxi.driver.name.match(re) || 
+        taxi.driver.surname.match(re) ||
+        taxi.driver.phone.match(re) ||
+        taxi.vehicle.brand.match(re) ||
+        taxi.vehicle.type.match(re) ||
+        taxi.driver.note.match(re)
         )
 }
 
 Filter.shouldShowCustomer = function(customer) {
     if(Filter.type === Filter.Cars) return false;
+	var re = new RegExp(Filter.text, 'gi');
     return (
-        customer.name.includes(Filter.text) || 
-        customer.surname.includes(Filter.text) ||
-        customer.phone.includes(Filter.text) ||
-        customer.note.includes(Filter.text)
+        customer.name.match(re) || 
+        customer.surname.match(re) ||
+        customer.phone.match(re) ||
+        customer.note.match(re)
         )
 }
 
