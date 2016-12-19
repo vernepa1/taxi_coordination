@@ -25,7 +25,15 @@
         var trafficLayer = new google.maps.TrafficLayer();
         trafficLayer.setMap(this.map);
 
-        this.map.addListener('click', ns.Map.clickHandler);
+		var defaultBounds = new google.maps.LatLngBounds(
+			new google.maps.LatLng(48.741, 12.007),
+			new google.maps.LatLng(51.007, 18.742)
+		);
+
+		var fromBox = document.getElementById('FromBox');
+		var searchBoxFrom = new google.maps.places.SearchBox(fromBox, { bounds: defaultBounds });
+		var toBox = document.getElementById('ToBox');
+		var searchBoxTp = new google.maps.places.SearchBox(toBox, { bounds: defaultBounds });
     };
 
     ns.Map.getInstance = function () {
@@ -34,26 +42,28 @@
         }
         return map;
     };
+	
+	ns.M
 
-    ns.Map.clickHandler = function (event) {
-        Selection.unselectAll();
+    // ns.Map.clickHandler = function (event) {
+        // Selection.unselectAll();
 
-        var latitude = event.latLng.lat();
-        var longitude = event.latLng.lng();
-        var pos = new google.maps.LatLng(latitude, longitude);
+        // var latitude = event.latLng.lat();
+        // var longitude = event.latLng.lng();
+        // var pos = new google.maps.LatLng(latitude, longitude);
 
-        var geocoder = new google.maps.Geocoder();
+        // var geocoder = new google.maps.Geocoder();
 
-        geocoder.geocode({
-            'latLng': pos
-        }, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                if (results[0]) {
-                    $("#FromBox").val(results[0].formatted_address);
-                }
-            }
-        });
-    };
+        // geocoder.geocode({
+            // 'latLng': pos
+        // }, function (results, status) {
+            // if (status == google.maps.GeocoderStatus.OK) {
+                // if (results[0]) {
+                    // $("#FromBox").val(results[0].formatted_address);
+                // }
+            // }
+        // });
+    // };
 
     ns.Map.loadCustomerFromLocation = function(customer, from) {
         var geocoder = new google.maps.Geocoder();
