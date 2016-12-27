@@ -20,6 +20,9 @@ function changeIcon(domImg,srcImage) {
     img.src = srcImage;
 }
 
+function getRandomPrice() {
+	return Math.floor(Math.random() * 400) / 10;
+}
 
 function OKButton() {
     if ($('#FromBox').val().length == 0) {
@@ -34,6 +37,7 @@ function OKButton() {
         $('#PassLabel').html($('#PassBox').val());
         $('#LuggLabel').html($('#LuggBox').val());
         $("#VIPLabel").prop("checked", document.getElementById('VIPBox').checked);
+        $('#estPrice').html("$ " + getRandomPrice());
         showAvailableDrivers();
         $('#Confirm').modal();
     }
