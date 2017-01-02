@@ -149,11 +149,19 @@ function GetFormattedDate(date) {
   return month + '/' + day + '/' + year;
 }
 
+function GetFormattedTime(date) {
+  var hours = date.getHours().toString();
+  hours = hours.length > 1 ? hours : '0' + hours;
+  var minutes = date.getMinutes().toString();
+  minutes = minutes.length > 1 ? minutes : '0' + minutes;
+  return hours + ':' + minutes;
+}
+
 function ResetOrderForm() {
     var date = new Date();
     $("#orders :input").val("");
     $('#DateBox').val(GetFormattedDate(date));
-    $('#TimeBox').val(date.getHours() + ":" + date.getMinutes());
+    $('#TimeBox').val(GetFormattedTime(date));
     $('#PassBox').val(1);
     $('#LuggBox').val(1);
     $('#VIPBox').prop("checked", false);
