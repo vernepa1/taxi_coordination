@@ -140,11 +140,20 @@ function SubmitOrderButton() {
     ResetOrderForm();
 }
 
+function GetFormattedDate(date) {
+  var year = date.getFullYear();
+  var month = (1 + date.getMonth()).toString();
+  month = month.length > 1 ? month : '0' + month;
+  var day = date.getDate().toString();
+  day = day.length > 1 ? day : '0' + day;
+  return month + '/' + day + '/' + year;
+}
+
 function ResetOrderForm() {
     var date = new Date();
     $("#orders :input").val("");
-    $('#DateBox').val(date.toDateString());
-    $('#TimeBox').val(date.toTimeString());
+    $('#DateBox').val(GetFormattedDate(date));
+    $('#TimeBox').val(date.getHours() + ":" + date.getMinutes());
     $('#PassBox').val(1);
     $('#LuggBox').val(1);
     $('#VIPBox').prop("checked", false);
@@ -192,6 +201,7 @@ $(function () {
     }
 
 
+	$('#DateBox').datepicker();
     Selection.unselectAll();
     ResetOrderForm();
     moveProgress();

@@ -5,6 +5,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
     <link href='custom.css' rel='stylesheet' type='text/css'>
+    <link href='css/datepicker.css' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script>
         Taxi = {};
@@ -12,6 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTcRkUPH3Sy6rx-LeFLAAeCF6MfkD88OA&libraries=places"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/persistence.js"></script>
     <script src="js/selection.js"></script>
     <script src="js/map.js"></script>
@@ -586,7 +588,12 @@
                 <tr>
                     <td>
                         <label for="inputdefault">Date</label>
-                        <input class="form-control" id="DateBox" type="text">
+						<div class="input-group date" data-provide="datepicker">
+						<input type="text" id="DateBox" class="form-control">
+						<div class="input-group-addon">
+							<span class="glyphicon glyphicon-calendar"></span>
+						</div>
+					</div>
                     </td>
                 </tr>
                 <tr>
