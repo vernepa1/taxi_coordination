@@ -48,16 +48,16 @@ function showAvailableDrivers() {
     $(".availableDrivers").empty();
     var taxis = Taxi.Persistence.Persistence.getInstance().getFreeTaxis();
     if (taxis.length > 0) {
-		var randomDistance = Math.floor(Math.random() * 50) / 10;
+		var randomDistance = Math.floor(Math.random() * 20);
         $.each(taxis, function (i, t) {
             var button = $("<button/>", {
-				text: t.driver.name + " " + t.driver.surname + " (" + randomDistance.toFixed(1) + " km far, shift ends at " + t.shiftEnd + ")",
+				text: t.driver.name + " " + t.driver.surname + " (" + randomDistance + " minutes far, shift ends at " + t.shiftEnd + ")",
 					class: "btn "+ (i == 0 ? "btn-primary" : "btn-default"),
                 id: t.id,
                 click: buttonClassSwitcherForOrder
             });
             $(".availableDrivers").append(button);
-			randomDistance += Math.floor(Math.random() * 30) / 10;
+			randomDistance += Math.floor(Math.random() * 15);
             if (i == 0) {
                 $("#" + t.id).append($('<img>',{id:'lock',src:'lock.png', width:'20px', height:'20px'}));
                 $(button).append($('<img>',{id:'lock',src:'lock.png', width:'20px', height:'20px'}));
