@@ -37,6 +37,15 @@
         this.customers.splice(index, 1);
     };
 
+    ns.Persistence.prototype.clean = function () {
+        var self = this;
+        $.each(this.customers, function (i, c) {
+            if (c.toLoc == null || c.fromLoc == null) {
+                self.deleteCustomer(c);
+            }
+        });
+    };
+
     ns.Persistence.prototype.initDBFromJson = function(json) {
         var self = this;
         $.each(json.taxis, function (i, t) {

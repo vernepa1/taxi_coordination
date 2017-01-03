@@ -41,8 +41,7 @@
         }
         return map;
     };
-	
-	ns.M
+
 
     // ns.Map.clickHandler = function (event) {
         // Selection.unselectAll();
@@ -69,6 +68,9 @@
         geocoder.geocode({
             'address': from
         }, function (results, status) {
+            if (results.length == 0) {
+                alert("Could not get position from the \"From address\", try again with more accurate address.")
+            }
             if (status == google.maps.GeocoderStatus.OK) {
                 var db = Taxi.Persistence.Persistence.getInstance();
                 var c = db.getCustomer(customer);
@@ -85,14 +87,15 @@
         geocoder.geocode({
             'address': to
         }, function (results, status) {
-            console.log(status);
+            if (results.length == 0) {
+                alert("Could not get position from the \"To address\", try again with more accurate address.")
+            }
             if (status == google.maps.GeocoderStatus.OK) {
                 var db = Taxi.Persistence.Persistence.getInstance();
                 var c = db.getCustomer(customer);
                 if (results[0]) {
                     c.toLoc = results[0].geometry.location;
                 }
-                console.log(c);
                 ns.Map.getInstance().updateMap();
             }
         });
@@ -197,6 +200,7 @@
 
     ns.Map.prototype.updateMap = function () {
         var db = Taxi.Persistence.Persistence.getInstance();
+        db.clean();
         this.cleanMarkers();
         var self = this;
         var filteredTaxis = Filter.filterTaxis(db.taxis);
