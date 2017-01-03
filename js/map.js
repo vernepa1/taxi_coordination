@@ -143,9 +143,9 @@
                 fromMarker.position,
                 toMarker.position
             ],
-            strokeColor: "#FF0000",
-            strokeOpacity: 1.0,
-            strokeWeight: 10,
+            strokeColor: "#ff7c8d",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
             map: this.map
         });
 
