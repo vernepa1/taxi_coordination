@@ -177,6 +177,12 @@ Selection.selectCustomer = function (customer) {
         = customer.person.name + ' ' + customer.person.surname;
     document.getElementById('panel-customer-phone').innerHTML
         = customer.person.phone;
+    document.getElementById('panel-customer-from').innerHTML
+        = customer.fromAdd;
+    document.getElementById('panel-customer-to').innerHTML
+        = customer.toAdd;
+    document.getElementById('panel-customer-price').innerHTML
+        = customer.price;
     document.getElementById('ex2').value
         = customer.person.note;
     document.getElementById('panel-customer-history'); //todo
