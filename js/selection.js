@@ -183,6 +183,8 @@ Selection.selectCustomer = function (customer) {
         = customer.toAdd;
     document.getElementById('panel-customer-price').innerHTML
         = customer.price;
+    document.getElementById('panel-customer-passengers').innerHTML
+        = customer.passengers;
     document.getElementById('ex2').value
         = customer.person.note;
     document.getElementById('panel-customer-history'); //todo

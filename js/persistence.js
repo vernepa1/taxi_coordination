@@ -58,7 +58,7 @@
             var person = new ns.Person(t.person.name, t.person.surname, t.person.phone);
             var fromLoc = new google.maps.LatLng(t.fromLat, t.fromLong);
             var toLoc = new google.maps.LatLng(t.toLat, t.toLong);
-            var customer = new ns.Customer(person, null, fromLoc, toLoc, t.fromAddr, t.toAddr, t.price);
+            var customer = new ns.Customer(person, null, fromLoc, toLoc, t.fromAddr, t.toAddr, t.price, t.passengers);
             self.addCustomer(customer);
         });
     };
@@ -118,7 +118,7 @@
         this.customer = null;
     };
 
-    ns.Customer = function (person, taxi, fromLoc, toLoc, fromAdd, toAdd, price) {
+    ns.Customer = function (person, taxi, fromLoc, toLoc, fromAdd, toAdd, price, passengers) {
         this.id = ns.Persistence.generateId();
         this.person = person;
         this.taxi = taxi;
@@ -128,6 +128,7 @@
         this.fromAdd = fromAdd;
         this.toAdd = toAdd;
         this.price = price;
+        this.passengers = passengers;
     };
 
 

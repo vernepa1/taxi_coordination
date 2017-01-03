@@ -87,7 +87,8 @@
       "toLat": 50.081328,
       "toLong": 14.405576,
       "toAddr": "Vítězná 442/14",
-      "price": 250
+      "price": 250,
+      "passengers": 1
     }
   ]
 }

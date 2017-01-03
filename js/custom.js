@@ -38,29 +38,31 @@ function OKButton() {
         $('#LuggLabel').html($('#LuggBox').val());
         $("#VIPLabel").prop("checked", document.getElementById('VIPBox').checked);
         $('#estPrice').html("$ " + getRandomPrice());
-        showAvailableDrivers();
+        showAvailableDrivers($('#PassBox').val());
         $('#Confirm').modal();
     }
 }
 
-function showAvailableDrivers() {
+function showAvailableDrivers(passengers) {
     //show nearest drivers - shows all of them, does not matter now
     $(".availableDrivers").empty();
     var taxis = Taxi.Persistence.Persistence.getInstance().getFreeTaxis();
     if (taxis.length > 0) {
 		var randomDistance = Math.floor(Math.random() * 20);
         $.each(taxis, function (i, t) {
-            var button = $("<button/>", {
-				text: t.driver.name + " " + t.driver.surname + " (" + randomDistance + " minutes far, shift ends at " + t.shiftEnd + ")",
-					class: "btn "+ (i == 0 ? "btn-primary" : "btn-default"),
-                id: t.id,
-                click: buttonClassSwitcherForOrder
-            });
-            $(".availableDrivers").append(button);
-			randomDistance += Math.floor(Math.random() * 15);
-            if (i == 0) {
-                $("#" + t.id).append($('<img>',{id:'lock',src:'lock.png', width:'20px', height:'20px'}));
-                $(button).append($('<img>',{id:'lock',src:'lock.png', width:'20px', height:'20px'}));
+            if (t.vehicle.seats >= passengers) {
+                var button = $("<button/>", {
+                    text: t.driver.name + " " + t.driver.surname + " (" + t.vehicle.seats + " seats, " + randomDistance + " minutes far, shift ends at " + t.shiftEnd + ")",
+                    class: "btn " + (i == 0 ? "btn-primary" : "btn-default"),
+                    id: t.id,
+                    click: buttonClassSwitcherForOrder
+                });
+                $(".availableDrivers").append(button);
+                randomDistance += Math.floor(Math.random() * 15);
+                if (i == 0) {
+                    $("#" + t.id).append($('<img>', {id: 'lock', src: 'lock.png', width: '20px', height: '20px'}));
+                    $(button).append($('<img>', {id: 'lock', src: 'lock.png', width: '20px', height: '20px'}));
+                }
             }
         });
     } else {
@@ -74,7 +76,7 @@ function showAvailableDrivers() {
 }
 
 function assignTaxi(customer) {
-    showAvailableDrivers();
+    showAvailableDrivers(customer.passengers);
     $("#submitTaxiAssignement").on("click", function () {
         SubmitTaxiAssignement(customer);
     });
@@ -132,7 +134,7 @@ function SubmitOrderButton() {
     var id = $("#availableDrivers1").find("button.btn-primary").attr("id");
     var taxi = db.getTaxi(id);
     var person = new Taxi.Persistence.Person("Unknown", "Customer", "+420" + Math.floor((Math.random() * 999999999) + 100000000));
-    var customer = new Taxi.Persistence.Customer(person, taxi, null, null, $('#FromBox').val(), $('#ToBox').val(), $('#estPrice').text());
+    var customer = new Taxi.Persistence.Customer(person, taxi, null, null, $('#FromBox').val(), $('#ToBox').val(), $('#estPrice').text(), $('#PassBox').val());
     taxi.customer = customer;
     Taxi.Map.Map.loadCustomerFromLocation(customer.id, $('#FromBox').val());
     Taxi.Map.Map.loadCustomerToLocation(customer.id, $('#ToBox').val());
