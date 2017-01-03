@@ -145,8 +145,12 @@
             ],
             strokeColor: "#ff7c8d",
             strokeOpacity: 0.8,
-            strokeWeight: 2,
+            strokeWeight: 4,
             map: this.map
+        });
+
+        line.addListener('click', function () {
+            Selection.selectCustomerId(fromMarker.customerId);
         });
 
         var c = Taxi.Persistence.Persistence.getInstance().getCustomer(id);
@@ -157,19 +161,20 @@
                     c.taxi.loc
                 ],
                 strokeColor: "#00FF00",
-                strokeOpacity: 1.0,
-                strokeWeight: 10,
+                strokeOpacity: 0.8,
+                strokeWeight: 4,
                 map: this.map
             });
 
             this.customerMarkers.push(driverLine);
+            driverLine.addListener('click', function () {
+               Selection.selectCustomerId(fromMarker.customerId);
+            });
         }
 
         this.customerMarkers.push(fromMarker);
         this.customerMarkers.push(toMarker);
         this.customerMarkers.push(line);
-
-
 
 
         //todo a kdyz se na nej klikne, tak co?
