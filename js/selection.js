@@ -3,6 +3,7 @@ var Selection = {};
 Selection.selectedTaxi = null;
 Selection.selectedCustomer = null;
 Selection.db = Taxi.Persistence.Persistence.getInstance();
+Selection.fieldBeingEdited = false;
 
 Selection.selectTaxi = function (taxi) {
     Selection.selectedTaxi = taxi;
@@ -93,6 +94,15 @@ Selection.openDriverDetails = function (id) {
         $('#currentClientPrice').text("");
     }
 
+    $("#DriverDetail").on("hide.bs.modal", function (e) {
+        if (Selection.fieldBeingEdited) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            alert("You have unsaved changes in a field!");
+            return false;
+        }
+    })
+
 };
 
 Selection.openCustomerDetails = function (customer) {
@@ -106,6 +116,15 @@ Selection.openCustomerDetails = function (customer) {
         $("#CustomerDetail").modal("toggle");
         Selection.unselectAll();
     });
+
+    $("#CustomerDetail").on("hide.bs.modal", function (e) {
+        if (Selection.fieldBeingEdited) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            alert("You have unsaved changes in a field!");
+            return false;
+        }
+    })
 };
 
 
@@ -125,10 +144,12 @@ Selection.editField = function (name) {
         var taxi = db.getTaxi($('#driverId').text());
         this.saveTaxiByFields(taxi);
         this.selectTaxi(taxi);
+        Selection.fieldBeingEdited = false;
     } else {
         $('#' + name + 'Input').prop("disabled", false);
         changeIcon(document.getElementById(name), "save.png");
         document.getElementById(name + 'Input').style.border = "1px solid black";
+        Selection.fieldBeingEdited = true;
     }
 };
 
@@ -140,10 +161,12 @@ Selection.editCustomerField = function (name) {
         var customer = Selection.selectedCustomer;
         this.saveCustomerByFields(customer);
         this.selectCustomer(customer);
+        Selection.fieldBeingEdited = false;
     } else {
         $('#' + name + 'Input').prop("disabled", false);
         changeIcon(document.getElementById(name), "save.png");
         document.getElementById(name + 'Input').style.border = "1px solid black";
+        Selection.fieldBeingEdited = true;
     }
 };
 
