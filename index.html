@@ -273,16 +273,19 @@
             <table id='side-panel' align="center" cellspacing="0" width="100%">
                 <tbody id="driverPanel">
                 <tr>
-                    <td id='panel-driver-picture' align='center' colspan=2>
-                        <button type="button" onclick="Selection.openDriverDetails($('#driverId').text());"
-                                data-toggle="modal" data-target="#DriverDetail" id="btnDriverDetails"><img
-                                src="person.png" alt="person" width='70%' height='70%'></button>
+                    <td id='panel-driver-picture' align='center' colspan=2><img
+                                src="person.png" alt="person" width='70%' height='70%'>
                     </td>
                 </tr>
                 <tr>
                     <td align='center' colspan=2><p><b><font id='panel-driver-name' size='6'>Driver name</font></b></p>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan = 2><button type="button" class="btn btn-primary" style="width:100%" onclick="Selection.openDriverDetails($('#driverId').text());"
+                                            data-toggle="modal" data-target="#DriverDetail" id="btnDriverDetails">Show driver details</button></td>
+                </tr>
+                <tr><td colspan="2"><br></td></tr>
                  <tr>
                     <td colspan = 2><button type="button" class="btn btn-danger" style="width:100%" onclick="hideDriverPanel()">Hide driver</button></td>
                 </tr>
@@ -363,16 +366,18 @@
                 <tbody id="customerPanel">
                 <tr id='panel-customer-firstRow'>
                     <td id='panel-customer-picture' align='center' colspan=2>
-                        <button type="button" onclick="Selection.openCustomerDetails(Selection.selectedCustomer);"
-                                data-toggle="modal" data-target="#CustomerDetail" id="btnCustomerDetails">
                         <img src="customer.png" alt="customer" width='60%' height='60%'>
-                        </button>
                                                                                   </td>
                 </tr>
                 <tr>
                     <td align='center' colspan=2><p><b><font id='panel-customer-name' size='6'>Customer name</font></b>
                     </p></td>
                 </tr>
+                <tr>
+                    <td colspan = 2><button type="button" class="btn btn-primary" style="width:100%" onclick="Selection.openCustomerDetails(Selection.selectedCustomer);"
+                                            data-toggle="modal" data-target="#CustomerDetail" id="btnCustomerDetails">Show customer details</button></td>
+                </tr>
+                <tr><td colspan="2"><br></td></tr>
                  <tr>
                     <td colspan = 2><button type="button" class="btn btn-danger" style="width:100%" onclick="hideCustomerPanel()">Hide customer</button></td>
                 </tr>
@@ -415,7 +420,7 @@
                 </tr>
                 <tr id="assignTaxi" style="text-align: center">
                     <td colspan=2>
-                        <button type="button" class="btn btn-primary default"
+                        <button  style="width:100%" type="button" class="btn btn-success default"
                                           onclick="assignTaxi(Selection.selectedCustomer)">
                         Assign a taxi
                     </button><br><br>
