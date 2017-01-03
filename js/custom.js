@@ -26,10 +26,10 @@ function getRandomPrice() {
 
 function OKButton() {
     if ($('#FromBox').val().length == 0) {
-        alert("Fill from box!");
+        alert("New Order: Box \"From\" is empty, but pickup address is required!");
         //todo stop propagation of modal
     } else if ($('#ToBox').val().length == 0) {
-        alert("Fill to box!");
+        alert("New Order: Box \"To\" is empty, but destination address is required!");
     } else {
         $('#FromLabel').html($('#FromBox').val());
         $('#ToLabel').html($('#ToBox').val());
