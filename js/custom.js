@@ -163,6 +163,7 @@ function ResetOrderForm() {
     var date = new Date();
     $("#orders :input").val("");
     $('#DateBox').val(GetFormattedDate(date));
+    $('#TimeBox').timepicker('setTime', GetFormattedTime(date));
     $('#TimeBox').val(GetFormattedTime(date));
     $('#PassBox').val(1);
     $('#LuggBox').val(1);
@@ -212,6 +213,13 @@ $(function () {
 
 
 	$('#DateBox').datepicker();
+    $('#TimeBox').timepicker({
+        minuteStep: 1,
+        appendWidgetTo: 'body',
+        showSeconds: false,
+        showMeridian: false,
+        defaultTime: false
+    });
     Selection.unselectAll();
     ResetOrderForm();
     moveProgress();

@@ -6,6 +6,7 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
     <link href='custom.css' rel='stylesheet' type='text/css'>
     <link href='css/datepicker.css' rel='stylesheet' type='text/css'>
+    <link href='css/bootstrap-timepicker.min.css' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script>
         Taxi = {};
@@ -14,6 +15,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTcRkUPH3Sy6rx-LeFLAAeCF6MfkD88OA&libraries=places&language=en"></script>
     <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/bootstrap-timepicker.min.js"></script>
     <script src="js/persistence.js"></script>
     <script src="js/selection.js"></script>
     <script src="js/map.js"></script>
@@ -623,7 +625,12 @@
                 <tr>
                     <td>
                         <label for="inputdefault">Time</label>
-                        <input class="form-control" id="TimeBox" type="text">
+                        <div class="input-group bootstrap-timepicker timepicker">
+                            <input class="form-control" id="TimeBox" type="text">
+                            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-time"></i>
+            </span>
+                        </div>
                     </td>
                 </tr>
         </div>
@@ -639,8 +646,8 @@
                 </td>
                <td>
                     <div class="input-group-btn-vertical">
-                        <button class="btn btn-default" type="button" onclick="IncrementValue('PassBox', 1)"><i class="fa fa-caret-up"></i></button>
-                        <button class="btn btn-default" type="button" onclick="IncrementValue('PassBox', 0)" ><i class="fa fa-caret-down"></i></button>
+                        <button class="btn btn-default" type="button" onclick="IncrementValue('PassBox', 1)"><i class="glyphicon glyphicon-chevron-up"></i></button>
+                        <button class="btn btn-default" type="button" onclick="IncrementValue('PassBox', 0)" ><i class="glyphicon glyphicon-chevron-down"></i></button>
                 </td>
             </tr>
             <tr>
@@ -654,8 +661,8 @@
                 </td>
                <td>
                     <div class="input-group-btn-vertical">
-                        <button class="btn btn-default" type="button" onclick="IncrementValue('LuggBox', 1)"><i class="fa fa-caret-up"></i></button>
-                        <button class="btn btn-default" type="button" onclick="IncrementValue('LuggBox', 0)"><i class="fa fa-caret-down"></i></button>
+                        <button class="btn btn-default" type="button" onclick="IncrementValue('LuggBox', 1)"><i class="glyphicon glyphicon-chevron-up"></i></button>
+                        <button class="btn btn-default" type="button" onclick="IncrementValue('LuggBox', 0)"><i class="glyphicon glyphicon-chevron-down"></i></button>
                 </td>
             </tr>
             <tr>

@@ -73,6 +73,14 @@ Selection.isTaxiSelected = function () {
 Selection.openDriverDetails = function (id) {
     var taxi = db.getTaxi(id);
     $('#EditShiftInput').val(taxi.shiftEnd);
+    $('#EditShiftInput').timepicker({
+        minuteStep: 1,
+        appendWidgetTo: 'body',
+        showSeconds: false,
+        showMeridian: false,
+        defaultTime: false
+    });
+    $('#timepicker').timepicker('setTime', taxi.shiftEnd);
     $('#EditPhoneInput').val(taxi.driver.phone);
     $('#EditNoteInput').val(taxi.driver.note);
 
