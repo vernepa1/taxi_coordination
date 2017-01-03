@@ -25,12 +25,33 @@ function getRandomPrice() {
 }
 
 function OKButton() {
+    var succ = true;
+    var error = "";
     if ($('#FromBox').val().length == 0) {
-        alert("New Order: Box \"From\" is empty, but pickup address is required!");
-        //todo stop propagation of modal
-    } else if ($('#ToBox').val().length == 0) {
-        alert("New Order: Box \"To\" is empty, but destination address is required!");
-    } else {
+        if (succ) {
+            var TO_NAME = document.getElementById("ToBoxHasError");
+            TO_NAME.className = "form-group";
+        }
+        succ = false;
+        error = " - New Order: Box \"From\" is empty, but pickup address is required!\n\n";
+        var NAME = document.getElementById("FromBoxHasError");
+        NAME.className = "form-group has-error has-feedback";  
+    } 
+    if ($('#ToBox').val().length == 0) {
+        if (succ) {
+            var FROM_NAME = document.getElementById("FromBoxHasError");
+            FROM_NAME.className = "form-group";
+        }
+        succ = false;
+        error += " - New Order: Box \"To\" is empty, but destination address is required!";
+        var NAME = document.getElementById("ToBoxHasError");
+        NAME.className = "form-group has-error has-feedback";  
+    } 
+    if (succ) {
+        var TO_NAME = document.getElementById("ToBoxHasError");
+        var FROM_NAME = document.getElementById("FromBoxHasError");
+        FROM_NAME.className = "form-group";
+        TO_NAME.className = "form-group";
         $('#FromLabel').html($('#FromBox').val());
         $('#ToLabel').html($('#ToBox').val());
         $('#DateLabel').html($('#DateBox').val() + " " + $('#TimeBox').val());
@@ -38,8 +59,10 @@ function OKButton() {
         $('#LuggLabel').html($('#LuggBox').val());
         $("#VIPLabel").prop("checked", document.getElementById('VIPBox').checked);
         $('#estPrice').html("$ " + getRandomPrice());
-        showAvailableDrivers($('#PassBox').val());
+        showAvailableDrivers();
         $('#Confirm').modal();
+    } else {
+        alert(error);
     }
 }
 
